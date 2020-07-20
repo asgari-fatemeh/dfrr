@@ -4,7 +4,7 @@
 \alias{coef.dfrr}
 \title{Get estimated coefficients from a dfrr fit}
 \usage{
-coef.dfrr(
+\method{coef}{dfrr}(
   dfrr_fit,
   standardized = NULL,
   unstandardized = !standardized,
@@ -50,7 +50,6 @@ Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
 dfrr_fit<-dfrr(Y~X,yind=time)
 coefs<-coef(dfrr_fit)
 plot(coefs)
-
 }
 \seealso{
 \code{\link{plot.coef.dfrr}}
