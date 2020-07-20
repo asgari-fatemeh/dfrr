@@ -2,7 +2,7 @@
 ## Dichotomized functional response regression 
 Implementing Function-on-Scalar Regression model, in which the response function is dichotomized and observed sparsely.
 
-The output is a `dfrr-object`, which then can be injected into other methods/functions to postprocess the fitted model, including: `coefs.dfrr`,`fitted.dfrr`, 'residuals.dfrr', predict.dfrr, eigen.dfrr, summary.dfrr, qq.dfrr, model.matrix.dfrr, plot.coefs.dfrr, plot.fitted.dfrr, plot.residuals.dfrr, plot.predict.dfrr, plot.eigen.dfrr, plot.residuals.dfrr
+The output is a `dfrr-object`, which then can be injected into other methods/functions to postprocess the fitted model, including: `coefs.dfrr`,`fitted.dfrr`, `residuals.dfrr`, `predict.dfrr`, `eigen.dfrr`, `summary.dfrr`, `qq.dfrr`, `model.matrix.dfrr`, `plot.coefs.dfrr`, `plot.fitted.dfrr`, `plot.residuals.dfrr`, `plot.predict.dfrr`, `plot.eigen.dfrr`, `plot.residuals.dfrr`
 
 ## Installation
 
