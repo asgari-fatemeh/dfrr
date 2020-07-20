@@ -21,6 +21,4 @@ RoxygenNote: 7.1.1
 NeedsCompilation: no
 Packaged: 2018-03-29 14:51:56 UTC; simon
 Author: Fatemeh Asgari [aut, cre],
-  Saeed Hayati [aut, ctb],
-Date/Publication: 2020-07-20 15:48:56 UTC
-Built: R 4.0.2;Fatemeh ; 2020-07-20 00:08:33 UTC; windows
+  Saeed Hayati [aut, ctb]
