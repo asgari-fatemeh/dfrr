@@ -1,0 +1,26 @@
+Package: dfrr
+Type: Package
+Title: Discritizded Functional Response Regression
+Version: 0.5.1
+Authors@R: c(
+      person("Fatemeh", "Asgari", email = "ft.asgari@sci.ui.ac.ir", role = c("aut", "cre")),
+      person("Saeed", "Hayati", email = "s.hayati@sci.ui.ac.ir", role = c("aut", "ctb"))
+  )
+Maintainer: Fatemeh Asgari <ft.asgari@sci.ui.ac.ir>
+Description: Dichotomized functional response regression model
+License: GPL-3
+LazyData: TRUE
+Encoding: UTF-8
+Depends: R, tmvtnorm, fda 
+Imports: stats, MASS  
+Suggests: ggplot2, plotly 
+VignetteBuilder: knitr
+URL: https://github.com/asgari-fatemeh/dfrr
+BugReports: https://github.com/asgari-fatemeh/dfrr/issues
+RoxygenNote: 7.1.1
+NeedsCompilation: no
+Packaged: 2018-03-29 14:51:56 UTC; simon
+Author: Fatemeh Asgari [aut, cre],
+  Saeed Hayati [aut, ctb],
+Date/Publication: 2020-07-20 15:48:56 UTC
+Built: R 4.0.2;Fatemeh ; 2020-07-20 00:08:33 UTC; windows
