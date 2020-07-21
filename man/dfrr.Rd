@@ -17,7 +17,7 @@ dfrr(
 )
 }
 \arguments{
-\item{formula}{an object of class "\code{\link[stats]{formula}}" (or one that can be coerced to that class with \code{\link[stats]{as.formula}}:
+\item{formula}{an object of class "\code{\link[stats]{formula}}" (or one that can be coerced to that class with \code{as.formula}:
 a symbolic description of the model to be fitted.}
 
 \item{yind}{a vector with length equal to the number of columns of the matrix of functional

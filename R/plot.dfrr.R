@@ -3,9 +3,9 @@
 #' Plot the regression coefficients, principal components, kernel function and residuals of a \code{dfrr}-object.
 #'
 #'@details
-#' The contour plot of the kernel function is produced if the package \code{\link[ggplot2]{ggplot2}} is installed.
-#' Plotting the 3d surface  of the kernel function is also depends on the package \code{\link[plotly]{plotly}}.
-#'To produce the qq-plot, the package \code{\link[car]{car}} must be installed.
+#' The contour plot of the kernel function is produced if the package \code{ggplot2} is installed.
+#' Plotting the 3d surface  of the kernel function is also depends on the package \code{plotly}.
+#'To produce the qq-plot, the package \code{car} must be installed.
 #'
 #'@inheritParams fpca
 #'

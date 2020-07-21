@@ -5,7 +5,7 @@
 #'@details This function plots the functional principal components,  contour plot and 3d surface of
 #' the kernel function.
 #'
-#' If the package \code{\link[ggplot2]{ggplot2}} is installed, the contour plot of
+#' If \code{\link[ggplot2]{ggplot2-package}} is installed, the contour plot of
 #'  the kernel function is produced by setting the argument \code{plot.contour=TRUE}.
 #'  Some graphical parameters of the contour plot can be modified by setting the (optional) argument
 #'  \code{plot.contour.pars}.
@@ -17,7 +17,7 @@
 #'
 #'@inheritParams fitted.dfrr
 #'@param plot.contour a \code{boolean} indicating whether to print the contour plot of the kernel function.
-#'It requires the package \code{\link[ggplot2]{ggplot2}} to be installed. Defaults to FALSE.
+#'It requires \code{\link[ggplot2]{ggplot2-package}} to be installed. Defaults to FALSE.
 #'@param plot.eigen.functions a \code{boolean} indicating whether to print the principal components/eigen-functions. Defaults to TRUE.
 #'@param plot.3dsurface a \code{boolean} indicating whether to print the 3d surface plot of the kernel function.
 #'It requires the package \code{\link[plotly]{plotly}} to be installed. Defaults to FALSE.

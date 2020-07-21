@@ -42,7 +42,7 @@
 #' plot(fpcs)
 #'
 #' @inheritParams predict.dfrr
-#' @param formula an object of class "\code{\link[stats]{formula}}" (or one that can be coerced to that class with \code{\link[stats]{as.formula}}:
+#' @param formula an object of class "\code{\link[stats]{formula}}" (or one that can be coerced to that class with \code{as.formula}:
 #'  a symbolic description of the model to be fitted.
 #' @param yind a vector with length equal to the number of columns of the matrix of functional
 #'  responses giving the vector of evaluation points \eqn{(t_1,...,t_{G})}.
