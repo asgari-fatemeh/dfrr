@@ -11,7 +11,7 @@ Description: Dichotomized functional response regression model
 License: GPL-3
 LazyData: TRUE
 Encoding: UTF-8
-Depends: R, tmvtnorm, fda 
+Depends: R (>=3.5.0), tmvtnorm, fda 
 Imports: stats, MASS  
 Suggests: ggplot2, plotly 
 VignetteBuilder: knitr
@@ -19,6 +19,6 @@ URL: https://github.com/asgari-fatemeh/dfrr
 BugReports: https://github.com/asgari-fatemeh/dfrr/issues
 RoxygenNote: 7.1.1
 NeedsCompilation: no
-Packaged: 2018-03-29 14:51:56 UTC; simon
+Packaged: 2018-03-29 14:51:56 UTC; Fatemeh
 Author: Fatemeh Asgari [aut, cre],
   Saeed Hayati [aut, ctb]
