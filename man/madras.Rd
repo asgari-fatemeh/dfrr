@@ -15,7 +15,7 @@ A data frame with 1032 observations and 5 variables
 }
 }
 \source{
-Diggle PJ, Heagerty P, Liang KY, Zeger SL (2002). The analysis of Longitudinal Data, second ed., pp. 234-43. Oxford University Press, Oxford.
+Diggle PJ, Heagerty P, Liang KY, Zeger SL (2002). The analysis of Longitudinal Data, second ed., pp. 234-43. Oxford University Press, Oxford.\cr
 <http://faculty.washington.edu/heagerty/Books/AnalysisLongitudinal/datasets.html>
 }
 \usage{
@@ -29,6 +29,5 @@ over the first year after initial hospitalisation for disease.
 Jokinen J. Fast estimation algorithm for likelihood-based
  analysis of repeated categorical responses.
  \emph{Computational Statistics and Data Analysis} 2006; 51:1509-1522.
- @export
 }
 \keyword{datasets}

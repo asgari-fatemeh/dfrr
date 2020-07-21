@@ -1,7 +1,7 @@
 #' Simulating a Simple \code{dfrr} Model
 #'
 #' Simulation from a simple dfrr model:
-#'  \deqn{Y_{i}(t)=I(\beta_0(t)+\beta_1(t)*x_{i}+\varepsilon_{i}(t)+\epsilon_{i}(t)\times\sigma^2>0)},
+#'  \deqn{Y_{i}(t)=I(\beta_0(t)+\beta_1(t)*x_{i}+\varepsilon_{i}(t)+\epsilon_{i}(t)\times\sigma^2>0),}
 #'  where \eqn{I(.)} is the indicator function, and \eqn{\epsilon_{i}(t)} is iid standard normal for each \eqn{i} and \eqn{t}.
 #'  For demonstration purpose only.
 #'

@@ -7,12 +7,13 @@
 \method{plot}{fitted.dfrr}(
   fitted.dfrr,
   id = NULL,
-  main = id,
+  main = NULL,
   col = "blue",
   lwd = 2,
   lty = "solid",
   cex.circle = 1,
   col.circle = "black",
+  ylim = NULL,
   ...
 )
 }
@@ -29,6 +30,8 @@ plots.}
 \item{col, lwd, lty, ...}{graphical parameters passed to \code{\link{plot}}}
 
 \item{cex.circle, col.circle}{size and color of circles and filled circles.}
+
+\item{ylim}{a vector of length two indicating the range of y-axis of the plot.}
 }
 \description{
 Plot a  \code{fitted.dfrr} object.

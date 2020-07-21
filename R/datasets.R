@@ -11,10 +11,10 @@
 #'   \item{age}{age indicator: 0 = less than 20 years, 1 = 20 or over}
 #'   \item{gender}{sex indicator: 0 = male, 1 = female}
 #' }
-#' @source Diggle PJ, Heagerty P, Liang KY, Zeger SL (2002). The analysis of Longitudinal Data, second ed., pp. 234-43. Oxford University Press, Oxford.
+#' @source Diggle PJ, Heagerty P, Liang KY, Zeger SL (2002). The analysis of Longitudinal Data, second ed., pp. 234-43. Oxford University Press, Oxford.\cr
 #' <http://faculty.washington.edu/heagerty/Books/AnalysisLongitudinal/datasets.html>
 #' @references Jokinen J. Fast estimation algorithm for likelihood-based
 #'  analysis of repeated categorical responses.
 #'  \emph{Computational Statistics and Data Analysis} 2006; 51:1509-1522.
-#'  @export
+
 "madras"

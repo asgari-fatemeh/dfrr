@@ -5,10 +5,10 @@
 #'
 #' The output is a \code{dfrr}-object, which then can be injected into other methods/functions
 #'  to postprocess the fitted model, including:
-#'  \code{\link{coefs.dfrr}},\code{\link{fitted.dfrr}}, \code{\link{residuals.dfrr}}, \code{\link{predict.dfrr}},
-#'   \code{\link{eigen.dfrr}}, \code{\link{summary.dfrr}}, \code{\link{qq.dfrr}}, \code{\link{model.matrix.dfrr}},
-#'   \code{\link{plot.coefs.dfrr}}, \code{\link{plot.fitted.dfrr}}, \code{\link{plot.residuals.dfrr}},
-#'   \code{\link{plot.predict.dfrr}}, \code{\link{plot.eigen.dfrr}}, \code{\link{plot.residuals.dfrr}}
+#'  \code{\link{coef.dfrr}},\code{\link{fitted.dfrr}}, \code{\link{basis}}, \code{\link{residuals.dfrr}}, \code{\link{predict.dfrr}},
+#'   \code{\link{fpca}}, \code{\link{summary.dfrr}}, \code{\link{model.matrix.dfrr}},
+#'   \code{\link{plot.coef.dfrr}}, \code{\link{plot.fitted.dfrr}}, \code{\link{plot.residuals.dfrr}},
+#'   \code{\link{plot.predict.dfrr}}, \code{\link{plot.fpca.dfrr}}
 #'
 #'@examples
 #' set.seed(2000)
@@ -19,7 +19,7 @@
 #'                         beta1=function(t){2*t},
 #'                         X=X,time=time)
 #' dfrr_fit<-dfrr(Y~X,yind=time)
-#' summary(dfrr_fit)
+#' plot(dfrr_fit)
 #'
 #' ##### Fitting dfrr model to the Madras Longitudinal Schizophrenia data
 #' data(madras)
@@ -67,6 +67,7 @@ function(formula, yind=NULL, data = NULL, ydata = NULL,
 
 
   method<-match.arg(method)
+
   is.regular<-is.null(ydata)
 
   if(is.regular){
@@ -296,6 +297,7 @@ function(formula, yind=NULL, data = NULL, ydata = NULL,
   }
   class(res)<-"dfrr"
   attr(res,"formula")<-formula2
+  res$modelMatrix<-xData
 
   res
 

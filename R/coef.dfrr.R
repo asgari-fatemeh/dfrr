@@ -32,7 +32,7 @@
 #' dfrr_fit<-dfrr(Y~X,yind=time)
 #' coefs<-coef(dfrr_fit)
 #' plot(coefs)
-#'
+#'@method coef dfrr
 #'@export
 
 
@@ -50,10 +50,10 @@ function(dfrr_fit,standardized=NULL,unstandardized=!standardized,
                               ifelse(missing(unstandardized),NA,unstandardized),
         "Please specify 'standardized' or 'unstandardizedd' coefficients must be reported",
         TRUE)
-  return.principal.components<-paired.args.check(return.principal.components,
-                                  ifelse(missing(return.regression.coefficients),NA,return.regression.coefficients),
-                                  "Please specify only on of the 'return.regression.coefficients' or 'return.principal.components'",
-                                  FALSE)
+  # return.principal.components<-paired.args.check(return.principal.components,
+  #                                 ifelse(missing(return.regression.coefficients),NA,return.regression.coefficients),
+  #                                 "Please specify only on of the 'return.regression.coefficients' or 'return.principal.components'",
+  #                                 FALSE)
   return.fourier.coefs<-paired.args.check(return.fourier.coefs,
                                   ifelse(missing(return.evaluations),NA,return.evaluations),
                                   "Please specify only on of the 'return.fourier.coefs' or 'return.evaluations'",
@@ -89,7 +89,7 @@ function(dfrr_fit,standardized=NULL,unstandardized=!standardized,
       coefs<-dfrr_fit$B%*%E
   }
 
-  if(return.regression.coefficients)
+  if(!return.principal.components)
     rownames(coefs)<-dfrr_fit$varnames
 
   class(coefs)<-"coef.dfrr"

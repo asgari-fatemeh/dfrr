@@ -40,19 +40,24 @@ plot.residuals.dfrr<-function(residuals.dfrr,...){
     names(resids)<-paste0(idss,",",timess)
     resids<-resid[!is.na(resids)]
   }
-  car::qqPlot(resids,...)
+  if(require(car))
+    car::qqPlot(resids,...)
+  else
+    warning("Package 'car' is not installed.")
 }
 
 #' @export
-qq<-function(x,...){UseMethod("qq")}
+ qq<-function(x,...){UseMethod("qq")}
 
 #' @rdname plot.residuals.dfrr
+#' @method qq dfrr
 #' @export
 qq.dfrr<-function(dfrr_fit,...){
   resids<-residuals(dfrr_fit)
   plot.residuals.dfrr(resids,...)
 
 }
+
 
 
 

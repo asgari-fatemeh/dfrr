@@ -4,13 +4,15 @@
 \alias{plot.coef.dfrr}
 \title{Plot dfrr coefficients}
 \usage{
-\method{plot}{coef.dfrr}(coefs, select = NULL, ...)
+\method{plot}{coef.dfrr}(coefs, select = NULL, ask.hit.return = TRUE, ...)
 }
 \arguments{
 \item{coefs}{a \code{coef.dfrr}-object.}
 
 \item{select}{a vector of length one or more of indices of regression
 coefficients to plot.}
+
+\item{ask.hit.return}{a boolean indicating whether to wait for interaction of the user between any two plots.}
 
 \item{...}{graphical parameters passed to \code{plot}.}
 }

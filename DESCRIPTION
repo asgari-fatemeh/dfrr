@@ -1,19 +1,19 @@
 Package: dfrr
 Type: Package
-Title: Discritizded Functional Response Regression
-Version: 0.5.1
+Title: Dichotomized Functional Response Regression
+Version: 0.1.0
 Authors@R: c(
       person("Fatemeh", "Asgari", email = "ft.asgari@sci.ui.ac.ir", role = c("aut", "cre")),
       person("Saeed", "Hayati", email = "s.hayati@sci.ui.ac.ir", role = c("aut", "ctb"))
   )
 Maintainer: Fatemeh Asgari <ft.asgari@sci.ui.ac.ir>
-Description: Dichotomized functional response regression model
+Description: Implementing Function-on-Scalar Regression model in which the response function is dichotomized and observed sparsely. This package provides smooth estimations of functional regression coefficients and principal components for the dfrr model.
 License: GPL-3
 LazyData: TRUE
 Encoding: UTF-8
-Depends: R (>= 3.00.0), tmvtnorm, fda 
+Depends: tmvtnorm,fda 
 Imports: stats, MASS  
-Suggests: ggplot2, plotly 
+Suggests: ggplot2, plotly, car
 VignetteBuilder: knitr
 URL: https://github.com/asgari-fatemeh/dfrr
 BugReports: https://github.com/asgari-fatemeh/dfrr/issues

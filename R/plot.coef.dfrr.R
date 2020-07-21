@@ -6,7 +6,7 @@
 #'@param select a vector of length one or more of indices of regression
 #' coefficients to plot.
 #'@param ... graphical parameters passed to \code{plot}.
-#'
+#'@param ask.hit.return a boolean indicating whether to wait for interaction of the user between any two plots.
 #'@examples
 #' set.seed(2000)
 #' N<-50;M<-24
@@ -25,14 +25,14 @@
 
 
 plot.coef.dfrr <-
-function(coefs,select=NULL,...){
+function(coefs,select=NULL,ask.hit.return=TRUE,...){
 
   attr(coefs,"dfrr_fit")->dfrr_fit
   attr(coefs,"standardized")->standardized
   attr(coefs,"pc.coefs")->return.principal.components
 
   time<-seq(dfrr_fit$range[1],dfrr_fit$range[2],length.out = 100)
-  basis<-basis.dfrr(dfrr_fit)
+  basis<-basis(dfrr_fit)
   E<-t(fda::eval.basis(time,basis))
 
   if(return.principal.components){
@@ -66,7 +66,8 @@ function(coefs,select=NULL,...){
       if(variance_explained<=0)
         return()
     }
-    invisible(readline(prompt="Hit <Returen> to see next plot:"))
+    if(ask.hit)
+      invisible(readline(prompt="Hit <Returen> to see next plot:"))
 
     lbl<-plotnames[select[i]]
     if(standardized)

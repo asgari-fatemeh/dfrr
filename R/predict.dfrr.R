@@ -88,9 +88,9 @@ function(dfrr_fit,newdata,newydata=NULL,standardized=NULL,unstandardized=!standa
 
   X<-lapply(1:N, function(i){kronecker(t(xData[i,]),diag(nrow = J))})
 
-  basis<-basis.dfrr(dfrr_fit)
+  basis<-basis(dfrr_fit)
 
-  if(standrdized)
+  if(standardized)
     b<-t(t(c(t(dfrr_fit$B_std))))
   else
     b<-t(t(c(t(dfrr_fit$B))))
@@ -103,7 +103,7 @@ function(dfrr_fit,newdata,newydata=NULL,standardized=NULL,unstandardized=!standa
     Coefs[i,]<-X[[i]]%*%b
 
 
-  if(standrdized)
+  if(standardized)
     zzt[[i]]<-dfrr_fit$sigma_theta_std
   else
     zzt[[i]]<-dfrr_fit$sigma_theta
@@ -153,7 +153,7 @@ function(dfrr_fit,newdata,newydata=NULL,standardized=NULL,unstandardized=!standa
       times[[i]]<-time
       Ms[i]<-M
 
-      if(standrdized)
+      if(standardized)
         sigma0<-dfrr_fit$sigma_theta_std
       else
         sigma0<-dfrr_fit$sigma_theta
@@ -165,7 +165,7 @@ function(dfrr_fit,newdata,newydata=NULL,standardized=NULL,unstandardized=!standa
       else
         kttt<-diag(diag(t(Ei)%*%sigma0%*%Ei))
 
-      if(standrdized)
+      if(standardized)
         kttt<-diag(nrow=M[i])
 
       cv<-dfrr_fit$sigma_2*kttt
@@ -211,7 +211,7 @@ function(dfrr_fit,newdata,newydata=NULL,standardized=NULL,unstandardized=!standa
     }
 
 
-  dfrr_fit$pred_data<-list(coefs=Coefs,zzt=zzt,ids=ids,standrdized=standrdized,
+  dfrr_fit$pred_data<-list(coefs=Coefs,zzt=zzt,ids=ids,standardized=standardized,
                            ydata=list(Y=Ys,time=times,M=Ms))
 
   if(return.fourier.coefs){

@@ -42,7 +42,7 @@ function(dfrr_fit,standardized=NULL,unstandardized=!standardized){
                                   TRUE)
 
   timeT<-sort(unique(unlist(dfrr_fit$data$time)),decreasing = FALSE)
-  basis<-basis.dfrr(dfrr_fit)
+  basis<-basis(dfrr_fit)
   E<-t(fda::eval.basis(timeT,basis))
   ktt<-diag(t(E)%*%dfrr_fit$sigma_theta%*%E)^-0.5
 

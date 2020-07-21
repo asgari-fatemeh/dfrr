@@ -24,6 +24,9 @@
 #'@param  plot.contour.pars a named list of graphical parameters passed to the function \code{\link[ggplot2]{ggplot}}.
 #'
 #'@param  plot.3dsurface.pars a named list of graphical parameters passed to the function \code{\link[plotly]{plot_ly}}.
+#'@param select a vector of length one or more of indices of eigenfunctions to be plotted.
+#'@param ... graphical parameters passed to \code{plot} function in drawing 2D eigenfunctions.
+#'@inheritParams plot.coef.dfrr
 #'
 #'@examples
 #' set.seed(2000)
@@ -41,7 +44,7 @@
 #'
 #'@export
 plot.fpca.dfrr <-
-function(dfrr_fit,plot.eigen.functions=TRUE,plot.contour=FALSE,plot.3dsurface=FALSE,
+function(fpca.dfrr,plot.eigen.functions=TRUE,select=NULL,plot.contour=FALSE,plot.3dsurface=FALSE,
                           plot.contour.pars=list(breaks=NULL,minor_breaks = NULL,
                                                  n.breaks = NULL,
                                                  labels = NULL,
@@ -49,11 +52,11 @@ function(dfrr_fit,plot.eigen.functions=TRUE,plot.contour=FALSE,plot.3dsurface=FA
                                                  colors=NULL,
                                                  xlab=NULL,ylab=NULL,title=NULL),
                           plot.3dsurface.pars=list(xlab=NULL,ylab=NULL,zlab=NULL,
-                                                    title=NULL,colors=NULL)
+                                                    title=NULL,colors=NULL),ask.hit.return=TRUE,...
                           ){
 
-  attr(dfrr_fit,"standardized") ->standardized
-  attr(dfrr_fit,"dfrr_fit")     ->dfrr_fit
+  attr(fpca.dfrr,"standardized") ->standardized
+  attr(fpca.dfrr,"dfrr_fit")     ->dfrr_fit
 
   if(plot.contour){
 
@@ -72,7 +75,7 @@ function(dfrr_fit,plot.eigen.functions=TRUE,plot.contour=FALSE,plot.3dsurface=FA
       par(mfrow=c(1,1))
 
       time2<-seq(dfrr_fit$range[1],dfrr_fit$range[2],length.out = 100)
-      basis<-basis.dfrr(dfrr_fit)
+      basis<-basis(dfrr_fit)
       E2<-t(fda::eval.basis(time2,basis))
       if(standardized)
         sigma0<-dfrr_fit$sigma_theta_std
@@ -110,8 +113,37 @@ function(dfrr_fit,plot.eigen.functions=TRUE,plot.contour=FALSE,plot.3dsurface=FA
   }
 
   if(plot.eigen.functions){
-    coef<-coef(dfrr_fit,return.principal.components = TRUE,standardized = standardized)
-    plot(coef)
+    basis<-basis(dfrr_fit)
+    time100<-seq(dfrr_fit$range[1],dfrr_fit$range[2],length.out=100)
+    E100<-t(fda::eval.basis(time100,basis))
+    yval<-t(fpca.dfrr$vectors)%*%E100
+    nus<-fpca.dfrr$values/sum(fpca.dfrr$values)
+
+    if(is.null(select))
+      select<-1:dim(yval)[1]
+
+    plotnames<-paste0("PC ",select)
+
+    for(i in 1:length(select)){
+        variance_explained<-round(nus[select[i]]*100,digits = 2)
+        if(variance_explained<=0)
+          return()
+    if(ask.hit)
+      invisible(readline(prompt="Hit <Returen> to see next plot:"))
+
+      lbl<-plotnames[select[i]]
+      if(standardized)
+        lbl<-paste0("Standardized ",lbl)
+
+
+        variance_explained<-round(nus[select[i]]*100,digits = 2)
+        if(variance_explained<=0)
+          return()
+
+        lbl<-paste0(lbl," (",round(nus[select[i]]*100,digits = 2),"%)")
+
+      plot(time100,yval[select[i],],'l',main=lbl,...)
+    }
   }
 
   if(plot.3dsurface){
@@ -129,7 +161,7 @@ function(dfrr_fit,plot.eigen.functions=TRUE,plot.contour=FALSE,plot.3dsurface=FA
       }
 
       time2<-seq(dfrr_fit$range[1],dfrr_fit$range[2],length.out = 100)
-      basis<-basis.dfrr(dfrr_fit)
+      basis<-basis(dfrr_fit)
       E2<-t(fda::eval.basis(time2,basis))
       if(standardized)
         sigma0<-dfrr_fit$sigma_theta_std

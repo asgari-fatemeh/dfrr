@@ -5,20 +5,23 @@
 \title{Plot dfrr functional principal components}
 \usage{
 \method{plot}{fpca.dfrr}(
-  dfrr_fit,
+  fpca.dfrr,
   plot.eigen.functions = TRUE,
+  select = NULL,
   plot.contour = FALSE,
   plot.3dsurface = FALSE,
   plot.contour.pars = list(breaks = NULL, minor_breaks = NULL, n.breaks = NULL, labels
     = NULL, limits = NULL, colors = NULL, xlab = NULL, ylab = NULL, title = NULL),
   plot.3dsurface.pars = list(xlab = NULL, ylab = NULL, zlab = NULL, title = NULL,
-    colors = NULL)
+    colors = NULL),
+  ask.hit.return = TRUE,
+  ...
 )
 }
 \arguments{
-\item{dfrr_fit}{a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.}
-
 \item{plot.eigen.functions}{a \code{boolean} indicating whether to print the principal components/eigen-functions. Defaults to TRUE.}
+
+\item{select}{a vector of length one or more of indices of eigenfunctions to be plotted.}
 
 \item{plot.contour}{a \code{boolean} indicating whether to print the contour plot of the kernel function.
 It requires the package \code{\link[ggplot2]{ggplot2}} to be installed. Defaults to FALSE.}
@@ -29,6 +32,10 @@ It requires the package \code{\link[plotly]{plotly}} to be installed. Defaults t
 \item{plot.contour.pars}{a named list of graphical parameters passed to the function \code{\link[ggplot2]{ggplot}}.}
 
 \item{plot.3dsurface.pars}{a named list of graphical parameters passed to the function \code{\link[plotly]{plot_ly}}.}
+
+\item{ask.hit.return}{a boolean indicating whether to wait for interaction of the user between any two plots.}
+
+\item{...}{graphical parameters passed to \code{plot} function in drawing 2D eigenfunctions.}
 }
 \description{
 Plot a \code{fpca.dfrr} object.

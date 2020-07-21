@@ -4,12 +4,13 @@
 \name{dfrr-package}
 \alias{dfrr-package}
 \alias{_PACKAGE}
-\title{dfrr: Discritizded Functional Response Regression}
+\title{dfrr: Dichotomized Functional Response Regression}
 \description{
-Dichotomized functional response regression model
+Implementing Function-on-Scalar Regression model in which the response function is dichotomized and observed sparsely. This package provides smooth estimations of functional regression coefficients and principal components for the dfrr model.
 }
 \details{
-The only function you're likely to need from dfrr-package is [dfrr()].
+Implementing Function-on-Scalar Regression model in which the response function is dichotomized and observed sparsely. This package provides smooth estimations of functional regression coefficients and principal components for the dfrr model.
+The main function in the dfrr-package is \link{dfrr}().
 }
 \examples{
 set.seed(2000)
@@ -29,7 +30,7 @@ fitteds<-fitted(dfrr_fit)
 
 resids<-residuals(dfrr_fit)
 
-eig<-eigen(dfrr_fit)
+eig<-fpca(dfrr_fit)
 plot(eig,plot.contour=TRUE,plot.3d.surface = TRUE)
 
 newdata<-data.frame(X=c(1,0))
@@ -47,7 +48,7 @@ plot(preds,conf.level = 0.9)
 
 }
 \references{
-Fatemeh Asgari, Alamatsaz Mohammad Hossein, Hayati Saeed (2021). 
+Fatemeh Asgari, Alamatsaz Mohammad Hossein, Hayati Saeed (2021).
 Dichotomized Functional Response Regression Model.
 <http://arxive.org/adress_to_paper>
 }

@@ -15,6 +15,7 @@
 #' plots.
 #'@param col,lwd,lty,... graphical parameters passed to \code{\link{plot}}
 #'@param cex.circle,col.circle size and color of circles and filled circles.
+#'@param ylim a vector of length two indicating the range of y-axis of the plot.
 #'
 #'@examples
 #' set.seed(2000)
@@ -31,34 +32,42 @@
 #'@method plot fitted.dfrr
 #'@export
 plot.fitted.dfrr <-
-function(fitted.dfrr,id=NULL,main=id,
-                           col='blue',lwd=2,lty="solid",cex.circle=1,col.circle='black',...){
+function(fitted.dfrr,id=NULL,main=NULL,
+                           col='blue',lwd=2,lty="solid",cex.circle=1,col.circle='black',ylim=NULL,...)
+{
   if(!is.null(main))
-    if(is.na(main))
+    if(is.na(main[1]))
       main<-""
 
   dfrr_fit<-attr(fitted.dfrr,"dfrr_fit")
   standardized<-attr(fitted.dfrr,"standardized")
 
-  if(is.null(id))
+
+  if(is.null(id)){
     id<-dfrr_fit$ids
-  else
+  }else{
     id<-intersect(id,dfrr_fit$ids)
+  }
 
   if(length(id)==0)
     stop("There is no sample with the specified id(s)")
 
-  basis<-basis.dfrr(dfrr_fit)
+  if(is.null(main))
+    main<-paste0("Id: ",id)
+
+  basis<-basis(dfrr_fit)
   time<-seq(dfrr_fit$range[1],dfrr_fit$range[2],length.out=100)
   E2<-t(fda::eval.basis(time,basis))
 
   if(length(main)!=length(id))
     main<-rep(main[1],length(id))
 
-  if(standardized)
-    coefs<-dfrr_fit$fitted.dfrr_coefs_std
-  else
-    coefs<-dfrr_fit$fitted.dfrr_coefs
+  if(standardized){
+    coefs<-dfrr_fit$fitted_coefs_std
+  }else{
+    coefs<-dfrr_fit$fitted_coefs
+  }
+
 
   for(i in 1:length(id)){
     ind<-which(dfrr_fit$ids==id[i])
@@ -66,16 +75,17 @@ function(fitted.dfrr,id=NULL,main=id,
     fitted.dfrr_value<-t(E2)%*%t(t(coefs[ind,]))
 
     lbl<-paste0("Id: ",id[i])
-
     mx<-max(abs(min(fitted.dfrr_value)),abs(max(fitted.dfrr_value)))*1.05
+    ylim2<-c(-mx,mx)
+    if(!is.null(ylim))
+      ylim2<-ylim
 
-    ylim<-c(-mx,mx)
     if(is.null(main[i]))
-      plot(time,fitted.dfrr_value,'l',main=lbl,ylim=ylim,col=col,lwd=lwd,lty=lty,...)
+      plot(time,fitted.dfrr_value,'l',main=lbl,ylim=ylim2,col=col,lwd=lwd,lty=lty,...)
     else if(main[i]=="")
-      plot(time,fitted.dfrr_value,'l',ylim=ylim,col=col,lwd=lwd,lty=lty,...)
+      plot(time,fitted.dfrr_value,'l',ylim=ylim2,col=col,lwd=lwd,lty=lty,...)
     else
-      plot(time,fitted.dfrr_value,'l',main=main[i],ylim=ylim,col=col,lwd=lwd,lty=lty,...)
+      plot(time,fitted.dfrr_value,'l',main=main[i],ylim=ylim2,col=col,lwd=lwd,lty=lty,...)
 
     points(dfrr_fit$data$time[[ind]],dfrr_fit$data$Y[[ind]]*0,pch=1,cex=cex.circle)
     tme1<-dfrr_fit$data$time[[ind]][dfrr_fit$data$Y[[ind]]==1]
@@ -84,4 +94,5 @@ function(fitted.dfrr,id=NULL,main=id,
     if(i<length(id))
         invisible(readline(prompt="Hit <Returen> to see next plot:"))
   }
+
 }
