@@ -11,7 +11,7 @@ Description: Implementing Function-on-Scalar Regression model in which the respo
 License: GPL-3
 LazyData: TRUE
 Encoding: UTF-8
-Depends: tmvtnorm,fda 
+Depends: R (>=3.5.3),tmvtnorm,fda 
 Imports: stats, MASS  
 Suggests: ggplot2, plotly, car
 VignetteBuilder: knitr
