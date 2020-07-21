@@ -41,6 +41,7 @@
 #' fpcs<-fpca(madras_dfrr)
 #' plot(fpcs)
 #'
+#' @inheritParams predict.dfrr
 #' @param formula an object of class "\code{\link[stats]{formula}}" (or one that can be coerced to that class with \code{\link[stats]{as.formula}}:
 #'  a symbolic description of the model to be fitted.
 #' @param yind a vector with length equal to the number of columns of the matrix of functional
@@ -60,13 +61,12 @@
 #' @export
 dfrr <-
 function(formula, yind=NULL, data = NULL, ydata = NULL,
-               method = c("REML","ML"),rangeval=NULL,basis=NULL,...){
+               method = c("REML","ML"),rangeval=NULL,basis=NULL,times_to_evaluate=NULL,...){
 
     formula<-as.formula(formula)
 
 
   method<-match.arg(method)
-  times_to_evaluate<-NULL
   is.regular<-is.null(ydata)
 
   if(is.regular){
