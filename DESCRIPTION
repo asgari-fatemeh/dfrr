@@ -11,7 +11,7 @@ Description: Dichotomized functional response regression model
 License: GPL-3
 LazyData: TRUE
 Encoding: UTF-8
-Depends: R (>=3.5.0), tmvtnorm, fda 
+Depends: R (>= 3.00.0), tmvtnorm, fda 
 Imports: stats, MASS  
 Suggests: ggplot2, plotly 
 VignetteBuilder: knitr
