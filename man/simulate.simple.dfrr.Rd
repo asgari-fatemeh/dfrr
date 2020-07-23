@@ -18,6 +18,8 @@
 \item{X}{an (optional) vector consists of scalar covariate}
 
 \item{time}{an (optional) vector of time point for which, each sample curve is observed at.}
+
+\item{sigma2}{variance of the measurement error in the \code{dfrr} model.}
 }
 \description{
 Simulation from a simple dfrr model:

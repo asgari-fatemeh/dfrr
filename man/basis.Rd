@@ -20,11 +20,12 @@ time<-seq(0,1,length.out=M)
 Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
                         beta1=function(t){2*t},
                         X=X,time=time)
-dfrr_fit<-dfrr(Y~X,yind=time)
+\donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
+\dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=3)}
 coefs<-coef(dfrr_fit,return.fourier.coefs=TRUE)
 
 basis<-basis(dfrr_fit)
-evaluated_coefs<-coefs\\%*\\%t(fda::eval.basis(time,basis))
+evaluated_coefs<-coefs\%*\%t(fda::eval.basis(time,basis))
 
 #Plotting the regression coefficients
 par(mfrow=c(1,2))

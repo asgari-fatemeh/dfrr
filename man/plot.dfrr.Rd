@@ -4,10 +4,12 @@
 \alias{plot.dfrr}
 \title{Plot a dfrr fit}
 \usage{
-\method{plot}{dfrr}(dfrr_fit)
+\method{plot}{dfrr}(dfrr_fit, ...)
 }
 \arguments{
 \item{dfrr_fit}{a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.}
+
+\item{...}{graphical parameters passed to \code{\link{plot.coef.dfrr}}}
 }
 \description{
 Plot the regression coefficients, principal components, kernel function and residuals of a \code{dfrr}-object.
@@ -25,7 +27,9 @@ time<-seq(0,1,length.out=M)
 Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
                         beta1=function(t){2*t},
                         X=X,time=time)
-dfrr_fit<-dfrr(Y~X,yind=time)
-plot(dfrr_fit)
+\donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
+\dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=3)}
+\donttest{plot(dfrr_fit)}
+\dontshow{plot(dfrr_fit,no_ggplot_plotly=TRUE)}
 
 }

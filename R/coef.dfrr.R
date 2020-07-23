@@ -29,7 +29,8 @@
 #' Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
 #'                         beta1=function(t){2*t},
 #'                         X=X,time=time)
-#' dfrr_fit<-dfrr(Y~X,yind=time)
+#' \donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
+#' \dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=3)}
 #' coefs<-coef(dfrr_fit)
 #' plot(coefs)
 #'@method coef dfrr
@@ -68,7 +69,7 @@ function(dfrr_fit,standardized=NULL,unstandardized=!standardized,
         coefs<-dfrr_fit$Theta
     }else{
       if(standardized)
-        cowfs<-dfrr_fit$B_std
+        coefs<-dfrr_fit$B_std
       else
         coefs<-dfrr_fit$B
     }
@@ -77,6 +78,7 @@ function(dfrr_fit,standardized=NULL,unstandardized=!standardized,
     time_to_evaluate<-seq(dfrr_fit$range[1],dfrr_fit$range[2],length.out=100)
 
   E<-t(fda::eval.basis(time_to_evaluate,dfrr_fit$basis))
+  if(!return.fourier.coefs)
   if(return.principal.components){
     if(standardized)
       coefs<-dfrr_fit$Theta_std%*%E
@@ -92,7 +94,7 @@ function(dfrr_fit,standardized=NULL,unstandardized=!standardized,
   if(!return.principal.components)
     rownames(coefs)<-dfrr_fit$varnames
 
-  class(coefs)<-"coef.dfrr"
+  class(coefs)<-c("coef.dfrr",class(coefs))
   attr(coefs,"dfrr_fit")<-dfrr_fit
   attr(coefs,"standardized")<-standardized
   attr(coefs,"pc.coefs")<-return.principal.components

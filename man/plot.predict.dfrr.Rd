@@ -8,7 +8,7 @@
   predict.dfrr,
   id = NULL,
   conf.band.type = "BEc",
-  conf.level = 0.95,
+  conf.level = NULL,
   main = id,
   col = "blue",
   lwd = 2,
@@ -27,18 +27,22 @@
  all subject ids.}
 
 \item{conf.band.type}{a type of confidence band specified
-in package \code{\href{https://github.com/hpchoi/fregion}{fregion}}.
+in package \href{https://github.com/hpchoi/fregion}{\code{fregion}}.
 Can be either NULL for omitting the confidence band from the plot, "BEc" for modified Scheffe style band constructing from a hyper-ellipsoid region,
 "Bs" for Parametric bootstrap simultaneous confidence band, or any other \code{conf.band.type} acceptable to
-package \code{\href{https://github.com/hpchoi/fregion}{fregion}}. Defaults to NULL. See References.}
+package \href{https://github.com/hpchoi/fregion}{\code{fregion}}. Defaults to NULL. See References.
+\cr
+Confidence bands are drawn if the \code{conf.level} argument is set to a valid value in the interval (0,1).}
 
-\item{conf.level}{confidence levels for the bands to achieve. Defaults to 0.95.}
+\item{conf.level}{confidence levels for the bands to achieve. Defaults to NULL.}
 
 \item{main}{a vector of length one or \code{length(id)} containing the title of plots.}
 
 \item{col, lwd, lty, ...}{graphical parameters passed to \code{\link{plot}}}
 
 \item{cex.circle, col.circle}{size and color of circles and filled circles.}
+
+\item{ylim}{a vector of length two indicating the range of y-axis of the plot.}
 }
 \description{
 Plot a  \code{predict.dfrr} object.
@@ -49,7 +53,7 @@ For the case in which \code{newydata} is also given, the predictions are plotted
  over the observed binary sequence.
 The binary sequence is illustrated with circles and filled circles for the values
 of zero and one, respectively. Confidence bands can also be added to the
-plot if the package \code{\href{https://github.com/hpchoi/fregion}{fregion}} is installed.
+plot if the package \href{https://github.com/hpchoi/fregion}{\code{fregion}} is installed.
 }
 \examples{
 set.seed(2000)
@@ -59,8 +63,16 @@ time<-seq(0,1,length.out=M)
 Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
                         beta1=function(t){2*t},
                         X=X,time=time)
-dfrr_fit<-dfrr(Y~X,yind=time)
-preds<-predict(dfrr_fit)
+\donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
+\dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=3)}
+
+newdata<-data.frame(X=c(1,0))
+  preds<-predict(dfrr_fit,newdata=newdata)
+  plot(preds)
+
+newdata<-data.frame(X=c(1,0))
+newydata<-data.frame(.obs=rep(1,5),.index=c(0.0,0.1,0.2,0.3,0.7),.value=c(1,1,1,0,0))
+preds<-predict(dfrr_fit,newdata=newdata,newydata = newydata)
 plot(preds)
 
 }

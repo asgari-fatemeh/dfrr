@@ -31,7 +31,8 @@
 #' Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
 #'                         beta1=function(t){2*t},
 #'                         X=X,time=time)
-#' dfrr_fit<-dfrr(Y~X,yind=time)
+#' \donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
+#' \dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=3)}
 #' fitteds<-fitted(dfrr_fit)
 #' plot(fitteds)
 #'
@@ -69,7 +70,7 @@ function(dfrr_fit,return.fourier.coefs=NULL,return.evaluations=!return.fourier.c
   E<-t(fda::eval.basis(time_to_evaluate,dfrr_fit$basis))
   fitted<-fitted%*%E
   if(!is.null(dfrr_fit$ids))
-    rownames(fitted)<-ids
+    rownames(fitted)<-dfrr_fit$ids
 
   fitted
 

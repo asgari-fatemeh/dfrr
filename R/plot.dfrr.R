@@ -8,7 +8,7 @@
 #'To produce the qq-plot, the package \code{car} must be installed.
 #'
 #'@inheritParams fpca
-#'
+#'@param ... graphical parameters passed to \code{\link{plot.coef.dfrr}}
 #'@examples
 #'set.seed(2000)
 #' N<-50;M<-24
@@ -17,17 +17,19 @@
 #' Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
 #'                         beta1=function(t){2*t},
 #'                         X=X,time=time)
-#' dfrr_fit<-dfrr(Y~X,yind=time)
-#' plot(dfrr_fit)
+#' \donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
+#' \dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=3)}
+#' \donttest{plot(dfrr_fit)}
+#' \dontshow{plot(dfrr_fit,no_ggplot_plotly=TRUE)}
 #'
 #'@method plot dfrr
 #'
 #'@export
 
 plot.dfrr <-
-function(dfrr_fit){
+function(dfrr_fit,...){
  #Plotting regression coefficients
-coefs<-coef(dfrr_fit)
+coefs<-coef.dfrr(dfrr_fit)
 p<-nrow(coefs)
 mfrow<-c(1,1)
 if(p==1)
@@ -45,7 +47,7 @@ par(mfrow=mfrow)
 for (i in 1:nographs) {
   ind1<-(i-1)*ppg+1
   ind2<-min(p,ppg*i)
-  plot(coefs,select=ind1:ind2,ask.hit.return=FALSE)
+  plot.coef.dfrr(coefs,select=ind1:ind2,ask.hit.return=FALSE,...)
   invisible(readline(prompt="Hit <Returen> to see next plot:"))
 
 }
@@ -72,20 +74,26 @@ par(mfrow=mfrow)
 for (i in 1:nographs) {
   ind1<-(i-1)*ppg+1
   ind2<-min(p,ppg*i)
-  plot(pcs,select=ind1:ind2,ask.hit.return=FALSE)
+  plot.fpca.dfrr(pcs,select=ind1:ind2,ask.hit.return=FALSE)
   invisible(readline(prompt="Hit <Returen> to see next plot:"))
 
 }
+
+dots<-list(...)
+if(!("no_ggplot_plotly" %in% names(dots))){
   #plotting contour of kernel function
-plot(pcs,plot.contour=TRUE,plot.eigen.functions=FALSE)
-invisible(readline(prompt="Hit <Returen> to see next plot:"))
+  plot.fpca.dfrr(pcs,plot.contour=TRUE,plot.eigen.functions=FALSE)
+  invisible(readline(prompt="Hit <Returen> to see next plot:"))
+
 
   #Plotting 3d surface of kernel function
-plot(plot.3dsurface=TRUE,plot.eigen.functions=FALSE)
-invisible(readline(prompt="Hit <Returen> to see next plot:"))
+  plot.fpca.dfrr(pcs,plot.3dsurface=TRUE,plot.eigen.functions=FALSE)
+  invisible(readline(prompt="Hit <Returen> to see next plot:"))
+}
+
 
   #Plotting residual functions
-resids<-residuals(dfrr_fit)
-plot(resids)
+resids<-residuals.dfrr(dfrr_fit)
+plot.residuals.dfrr(resids)
 
 }

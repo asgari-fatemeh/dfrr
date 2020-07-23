@@ -32,8 +32,16 @@
 #' Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
 #'                         beta1=function(t){2*t},
 #'                         X=X,time=time)
-#' dfrr_fit<-dfrr(Y~X,yind=time)
-#' preds<-predict(dfrr_fit)
+#' \donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
+#' \dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=3)}
+#'
+#' newdata<-data.frame(X=c(1,0))
+#'   preds<-predict(dfrr_fit,newdata=newdata)
+#'   plot(preds)
+#'
+#' newdata<-data.frame(X=c(1,0))
+#' newydata<-data.frame(.obs=rep(1,5),.index=c(0.0,0.1,0.2,0.3,0.7),.value=c(1,1,1,0,0))
+#' preds<-predict(dfrr_fit,newdata=newdata,newydata = newydata)
 #' plot(preds)
 #'
 #'@seealso \code{\link{plot.predict.dfrr}}
@@ -215,7 +223,7 @@ function(dfrr_fit,newdata,newydata=NULL,standardized=NULL,unstandardized=!standa
                            ydata=list(Y=Ys,time=times,M=Ms))
 
   if(return.fourier.coefs){
-    class(Coefs)<-"predict.dfrr"
+    class(Coefs)<-c("predict.dfrr",class(Coefs))
     attr(Coefs,"dfrr_fit")<-dfrr_fit
     return(Coefs)
   }
@@ -230,7 +238,7 @@ function(dfrr_fit,newdata,newydata=NULL,standardized=NULL,unstandardized=!standa
   if(!is.null(ids))
     rownames(preds)<-ids
 
-    class(preds)<-"dfrr_pred"
+    class(preds)<-c("predict.dfrr",class(Coefs))
     attr(preds,"dfrr_fit")<-dfrr_fit
 
   return(preds)

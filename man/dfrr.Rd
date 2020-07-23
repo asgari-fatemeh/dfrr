@@ -39,6 +39,8 @@ latent functional response. If not specified, it will set by minimum and maximum
 
 \item{basis}{an (optional) object of class \code{'basisfd'}. Defaults to cubic bspline basis.}
 
+\item{times_to_evaluate}{a numeric vector indicating the set of time points for evaluating the functional regression coefficients and principal components.}
+
 \item{...}{other arguments that can be passed to the inner function \code{AMCEM}.}
 }
 \description{
@@ -61,27 +63,50 @@ time<-seq(0,1,length.out=M)
 Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
                         beta1=function(t){2*t},
                         X=X,time=time)
-dfrr_fit<-dfrr(Y~X,yind=time)
+
+\donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
+\dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=3)}
 plot(dfrr_fit)
 
 ##### Fitting dfrr model to the Madras Longitudinal Schizophrenia data
 data(madras)
-ydata<-data.frame(.obs=madras$id,.index=madras$month,.value=madras$y)
 ids<-unique(madras$id)
-q<-4
 N<-length(ids)
-xData<-data.frame(Age=rep(NA,N),Gender=rep(NA,N))
+
+ydata<-data.frame(.obs=madras$id,.index=madras$month,.value=madras$y)
+
+xdata<-data.frame(Age=rep(NA,N),Gender=rep(NA,N))
 for(i in 1:N){
   dt<-madras[madras$id==ids[i],]
-  xData[i,]<-c(dt$age[1],dt$gender[1])
+  xdata[i,]<-c(dt$age[1],dt$gender[1])
 }
-rownames(xData)<-ids
+rownames(xdata)<-ids
 
-madras_dfrr<-dfrr(Y~Age+Gender+Age*Gender, data=xData, ydata=ydata, J=11,T_E=5)
+\dontshow{madras_dfrr<-dfrr(Y~Age+Gender+Age*Gender, data=xdata, ydata=ydata, J=11,T_E=5)}
+\donttest{madras_dfrr<-dfrr(Y~Age+Gender+Age*Gender, data=xdata, ydata=ydata, J=11)}
 coefs<-coef(madras_dfrr)
 plot(coefs)
 
 fpcs<-fpca(madras_dfrr)
 plot(fpcs)
+\donttest{plot(fpcs,plot.eigen.functions=FALSE,plot.contour=TRUE,plot.3dsurface = TRUE)}
+
+par(mfrow=c(2,2))
+fitteds<-fitted(madras_dfrr) #Plot first four fitted functions
+  plot(fitteds,id=c(1,2,3,4))
+
+resids<-residuals(madras_dfrr)
+\donttest{plot(resids)}
+
+
+newdata<-data.frame(Age=c(1,1,0,0),Gender=c(1,0,1,0))
+  preds<-predict(madras_dfrr,newdata=newdata)
+  plot(preds)
+
+
+newdata<-data.frame(Age=c(1,1,0,0),Gender=c(1,0,1,0))
+newydata<-data.frame(.obs=rep(1,5),.index=c(0,1,3,4,5),.value=c(1,1,1,0,0))
+preds<-predict(madras_dfrr,newdata=newdata,newydata = newydata)
+plot(preds)
 
 }

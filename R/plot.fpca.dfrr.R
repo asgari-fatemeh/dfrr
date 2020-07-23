@@ -16,6 +16,7 @@
 #'  \code{plot.3dsurface.pars}.
 #'
 #'@inheritParams fitted.dfrr
+#'@param fpca.dfrr a \code{fpca.dfrr}-object to be plotted. It is the output of the function \code{\link{fpca}()}
 #'@param plot.contour a \code{boolean} indicating whether to print the contour plot of the kernel function.
 #'It requires \code{\link[ggplot2]{ggplot2-package}} to be installed. Defaults to FALSE.
 #'@param plot.eigen.functions a \code{boolean} indicating whether to print the principal components/eigen-functions. Defaults to TRUE.
@@ -28,6 +29,9 @@
 #'@param ... graphical parameters passed to \code{plot} function in drawing 2D eigenfunctions.
 #'@inheritParams plot.coef.dfrr
 #'
+#'@importFrom graphics lines par points
+#'@importFrom plotly plot_ly %>% layout add_surface
+#'@importFrom ggplot2 ggplot waiver aes geom_contour_filled scale_x_continuous scale_y_continuous scale_fill_manual theme_minimal labs
 #'@examples
 #' set.seed(2000)
 #' N<-50;M<-24
@@ -36,9 +40,10 @@
 #' Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
 #'                         beta1=function(t){2*t},
 #'                         X=X,time=time)
-#' dfrr_fit<-dfrr(Y~X,yind=time)
+#' \donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
+#' \dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=3)}
 #' fpcs<-fpca(dfrr_fit)
-#' plot(fpcs,plot.eigen.functions=TRUE,plot.contour=TRUE,plot.3dsurface=TRUE)
+#' \donttest{plot(fpcs,plot.eigen.functions=TRUE,plot.contour=TRUE,plot.3dsurface=TRUE)}
 #'
 #'@method plot fpca.dfrr
 #'
@@ -60,7 +65,7 @@ function(fpca.dfrr,plot.eigen.functions=TRUE,select=NULL,plot.contour=FALSE,plot
 
   if(plot.contour){
 
-    if(require(ggplot2)){
+    if(requireNamespace("ggplot2",quietly = FALSE)){
 
 
       contour.pars.default<-list(breaks= waiver(),minor_breaks =  waiver(),n.breaks = NULL,labels = waiver(),limits = NULL,
@@ -84,7 +89,8 @@ function(fpca.dfrr,plot.eigen.functions=TRUE,select=NULL,plot.contour=FALSE,plot
       cvs2<-t(E2)%*%sigma0%*%E2
 
       x<-expand.grid(time2,time2)
-      x<-data.frame(s=x[,1],t=x[,2],z=c(cvs2))
+      s=x[,1];t=x[,2];z=c(cvs2)
+      x<-data.frame(s=s,t=t,z=z)
       v <- ggplot(x, aes(x=s, y=t, z = z))+
         geom_contour_filled(show.legend = FALSE)+
         scale_x_continuous(breaks = plot.contour.pars$breaks,
@@ -128,7 +134,7 @@ function(fpca.dfrr,plot.eigen.functions=TRUE,select=NULL,plot.contour=FALSE,plot
         variance_explained<-round(nus[select[i]]*100,digits = 2)
         if(variance_explained<=0)
           return()
-    if(ask.hit)
+    if(ask.hit.return)
       invisible(readline(prompt="Hit <Returen> to see next plot:"))
 
       lbl<-plotnames[select[i]]
@@ -147,7 +153,7 @@ function(fpca.dfrr,plot.eigen.functions=TRUE,select=NULL,plot.contour=FALSE,plot
   }
 
   if(plot.3dsurface){
-    if(require(plotly,quietly =TRUE)){
+    if(requireNamespace("plotly",quietly =TRUE)){
 
       surface3d.pars.default<-list(xlab="s",ylab="t",zlab="k(s,t)",title=NULL,
                                    colors=c("#0D0887FF","#350498FF","#5402A3FF","#7000A8FF","#8B0AA5FF","#A31E9AFF","#B93289FF",

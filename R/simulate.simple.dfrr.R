@@ -8,7 +8,7 @@
 #'@param beta0,beta1 (optional) functional intercept and regression coefficients
 #'@param X an (optional) vector consists of scalar covariate
 #'@param time an (optional) vector of time point for which, each sample curve is observed at.
-#'
+#'@param sigma2 variance of the measurement error in the \code{dfrr} model.
 #' @examples
 #' N<-50;M<-24
 #' X<-rnorm(N,mean=0)

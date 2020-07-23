@@ -15,7 +15,8 @@
 #' Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
 #'                         beta1=function(t){2*t},
 #'                         X=X,time=time)
-#' dfrr_fit<-dfrr(Y~X,yind=time)
+#' \donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
+#' \dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=3)}
 #' coefs<-coef(dfrr_fit)
 #' plot(coefs)
 #'
@@ -24,8 +25,7 @@
 #'@export
 
 
-plot.coef.dfrr <-
-function(coefs,select=NULL,ask.hit.return=TRUE,...){
+plot.coef.dfrr<-function(coefs,select=NULL,ask.hit.return=TRUE,...){
 
   attr(coefs,"dfrr_fit")->dfrr_fit
   attr(coefs,"standardized")->standardized
@@ -58,7 +58,7 @@ function(coefs,select=NULL,ask.hit.return=TRUE,...){
   plotnames<-if(return.principal.components)
                 paste0("PC ",select)
               else
-                paste0("Reg ",dfrr_fit$varnames[select])
+                paste0("Reg.Coef. ",dfrr_fit$varnames[select])
 
   for(i in 1:length(select)){
     if(return.principal.components){
@@ -66,7 +66,7 @@ function(coefs,select=NULL,ask.hit.return=TRUE,...){
       if(variance_explained<=0)
         return()
     }
-    if(ask.hit)
+    if(ask.hit.return)
       invisible(readline(prompt="Hit <Returen> to see next plot:"))
 
     lbl<-plotnames[select[i]]
@@ -81,8 +81,8 @@ function(coefs,select=NULL,ask.hit.return=TRUE,...){
       lbl<-paste0(lbl," (",round(nus[select[i]]*100,digits = 2),"%)")
     }
 
-
-    plot(time,yval[select[i],],'l',main=lbl,...)
+    value<-yval[select[i],]
+    plot(time,value,'l',main=lbl,...)
   }
 
 

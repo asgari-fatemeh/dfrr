@@ -1,3 +1,9 @@
+#'@importFrom fda eval.basis eval.penalty inprod create.bspline.basis
+#'@importFrom MASS mvrnorm
+#'@importFrom tmvtnorm rtmvnorm
+#'@importFrom utils setTxtProgressBar tail txtProgressBar
+#'@importFrom stats cor qnorm quantile rnorm sd
+#'@importFrom graphics plot.new
 AMCEM <-
   function(
     Y,
@@ -34,10 +40,9 @@ AMCEM <-
 
     T_G2=T_G
 
-    library(fda)
-    library(MASS)
-    library(refund)
-    library(tmvtnorm)
+    # library(fda)
+    # library(MASS)
+    # library(tmvtnorm)
 
     N<-length(Y)
 
@@ -108,7 +113,7 @@ AMCEM <-
 
     #basis<-create.fourier.basis(nbasis = J)
 
-    inee<-fda::inprod(basis,basis,rng=rangeval)
+    inee<-inprod(basis,basis,rng=rangeval)
 
     #################################
 
@@ -137,7 +142,7 @@ AMCEM <-
 
     P2<-eval.penalty(basis,pen_order,rng=rangeval)
 
-    P22<-fda::eval.penalty(basis,pen_order,rng=rangeval)
+    P22<-eval.penalty(basis,pen_order,rng=rangeval)
     P00<-diag(nrow=J)
 
     #P2<-alpha*P00+(1-alpha)*P22
@@ -389,7 +394,7 @@ AMCEM <-
               maxReject<-10
               repeat{
                 countt<-countt+1
-                z<-MASS::mvrnorm(1,mui,sigmai[[i]])
+                z<-mvrnorm(1,mui,sigmai[[i]])
 
                 zKz3<-t(z)%*%P2e%*%t(t(z))
                 if(is.na(zKz0))

@@ -54,8 +54,16 @@ time<-seq(0,1,length.out=M)
 Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
                         beta1=function(t){2*t},
                         X=X,time=time)
-dfrr_fit<-dfrr(Y~X,yind=time)
-preds<-predict(dfrr_fit)
+\donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
+\dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=3)}
+
+newdata<-data.frame(X=c(1,0))
+  preds<-predict(dfrr_fit,newdata=newdata)
+  plot(preds)
+
+newdata<-data.frame(X=c(1,0))
+newydata<-data.frame(.obs=rep(1,5),.index=c(0.0,0.1,0.2,0.3,0.7),.value=c(1,1,1,0,0))
+preds<-predict(dfrr_fit,newdata=newdata,newydata = newydata)
 plot(preds)
 
 }

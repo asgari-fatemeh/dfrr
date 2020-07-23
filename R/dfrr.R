@@ -10,6 +10,7 @@
 #'   \code{\link{plot.coef.dfrr}}, \code{\link{plot.fitted.dfrr}}, \code{\link{plot.residuals.dfrr}},
 #'   \code{\link{plot.predict.dfrr}}, \code{\link{plot.fpca.dfrr}}
 #'
+#'@importFrom stats as.formula model.matrix terms
 #'@examples
 #' set.seed(2000)
 #' N<-50;M<-24
@@ -18,30 +19,53 @@
 #' Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
 #'                         beta1=function(t){2*t},
 #'                         X=X,time=time)
-#' dfrr_fit<-dfrr(Y~X,yind=time)
+#'
+#' \donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
+#' \dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=3)}
 #' plot(dfrr_fit)
 #'
 #' ##### Fitting dfrr model to the Madras Longitudinal Schizophrenia data
 #' data(madras)
-#' ydata<-data.frame(.obs=madras$id,.index=madras$month,.value=madras$y)
 #' ids<-unique(madras$id)
-#' q<-4
 #' N<-length(ids)
-#' xData<-data.frame(Age=rep(NA,N),Gender=rep(NA,N))
+#'
+#' ydata<-data.frame(.obs=madras$id,.index=madras$month,.value=madras$y)
+#'
+#' xdata<-data.frame(Age=rep(NA,N),Gender=rep(NA,N))
 #' for(i in 1:N){
 #'   dt<-madras[madras$id==ids[i],]
-#'   xData[i,]<-c(dt$age[1],dt$gender[1])
+#'   xdata[i,]<-c(dt$age[1],dt$gender[1])
 #' }
-#' rownames(xData)<-ids
+#' rownames(xdata)<-ids
 #'
-#' madras_dfrr<-dfrr(Y~Age+Gender+Age*Gender, data=xData, ydata=ydata, J=11,T_E=5)
+#' \dontshow{madras_dfrr<-dfrr(Y~Age+Gender+Age*Gender, data=xdata, ydata=ydata, J=11,T_E=5)}
+#' \donttest{madras_dfrr<-dfrr(Y~Age+Gender+Age*Gender, data=xdata, ydata=ydata, J=11)}
 #' coefs<-coef(madras_dfrr)
 #' plot(coefs)
 #'
 #' fpcs<-fpca(madras_dfrr)
 #' plot(fpcs)
+#' \donttest{plot(fpcs,plot.eigen.functions=FALSE,plot.contour=TRUE,plot.3dsurface = TRUE)}
 #'
-#' @inheritParams predict.dfrr
+#' par(mfrow=c(2,2))
+#' fitteds<-fitted(madras_dfrr) #Plot first four fitted functions
+#'   plot(fitteds,id=c(1,2,3,4))
+#'
+#' resids<-residuals(madras_dfrr)
+#' \donttest{plot(resids)}
+#'
+#'
+#' newdata<-data.frame(Age=c(1,1,0,0),Gender=c(1,0,1,0))
+#'   preds<-predict(madras_dfrr,newdata=newdata)
+#'   plot(preds)
+#'
+#'
+#' newdata<-data.frame(Age=c(1,1,0,0),Gender=c(1,0,1,0))
+#' newydata<-data.frame(.obs=rep(1,5),.index=c(0,1,3,4,5),.value=c(1,1,1,0,0))
+#' preds<-predict(madras_dfrr,newdata=newdata,newydata = newydata)
+#' plot(preds)
+#'
+#' @param times_to_evaluate a numeric vector indicating the set of time points for evaluating the functional regression coefficients and principal components.
 #' @param formula an object of class "\code{\link[stats]{formula}}" (or one that can be coerced to that class with \code{as.formula}:
 #'  a symbolic description of the model to be fitted.
 #' @param yind a vector with length equal to the number of columns of the matrix of functional

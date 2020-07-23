@@ -19,6 +19,8 @@
 )
 }
 \arguments{
+\item{fpca.dfrr}{a \code{fpca.dfrr}-object to be plotted. It is the output of the function \code{\link{fpca}()}}
+
 \item{plot.eigen.functions}{a \code{boolean} indicating whether to print the principal components/eigen-functions. Defaults to TRUE.}
 
 \item{select}{a vector of length one or more of indices of eigenfunctions to be plotted.}
@@ -62,8 +64,9 @@ time<-seq(0,1,length.out=M)
 Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
                         beta1=function(t){2*t},
                         X=X,time=time)
-dfrr_fit<-dfrr(Y~X,yind=time)
+\donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
+\dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=3)}
 fpcs<-fpca(dfrr_fit)
-plot(fpcs,plot.eigen.functions=TRUE,plot.contour=TRUE,plot.3dsurface=TRUE)
+\donttest{plot(fpcs,plot.eigen.functions=TRUE,plot.contour=TRUE,plot.3dsurface=TRUE)}
 
 }

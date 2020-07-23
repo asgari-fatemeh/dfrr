@@ -17,6 +17,7 @@
 #'@param cex.circle,col.circle size and color of circles and filled circles.
 #'@param ylim a vector of length two indicating the range of y-axis of the plot.
 #'
+#'@importFrom graphics lines par points
 #'@examples
 #' set.seed(2000)
 #' N<-50;M<-24
@@ -25,7 +26,8 @@
 #' Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
 #'                         beta1=function(t){2*t},
 #'                         X=X,time=time)
-#' dfrr_fit<-dfrr(Y~X,yind=time)
+#' \donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
+#' \dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=3)}
 #' fitteds<-fitted(dfrr_fit)
 #' plot(fitteds)
 #'

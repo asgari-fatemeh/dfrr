@@ -26,9 +26,11 @@
 #' Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
 #'                         beta1=function(t){2*t},
 #'                         X=X,time=time)
-#' dfrr_fit<-dfrr(Y~X,yind=time)
+#' \donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
+#' \dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=3)}
 #' resid<-residuals(dfrr_fit)
-#' plot(resid)
+#'
+#' \donttest{plot(resid)}
 #' #qq(dfrr_fit)
 #'
 #'@export
@@ -64,7 +66,7 @@ function(dfrr_fit,standardized=NULL,unstandardized=!standardized){
           ydata$residual[ydata$.obs==id & ydata$.index==t]<-dfrr_fit$resids[[i]][j]*kttt
         }
       }
-      class(ydata)<-"residuals.dfrr"
+      class(ydata)<-c("residuals.dfrr",class(ydata))
       attr(ydata,"dfrr_fit")<-dfrr_fit
       attr(ydata,"standardized")<-standardized
       return(ydata)
@@ -89,7 +91,7 @@ function(dfrr_fit,standardized=NULL,unstandardized=!standardized){
     }
   }
 
- class(y_matrix)<-"residuals.dfrr"
+ class(y_matrix)<-c("residuals.dfrr",class(y_matrix))
  attr(y_matrix,"dfrr_fit")<-dfrr_fit
  attr(y_matrix,"standardized")<-standardized
 
