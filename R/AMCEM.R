@@ -326,9 +326,8 @@ AMCEM <-
         rejRate<-rejRate_flatRun
       }else{
 
-        #Rejrates<-c(0.8,0.9,1)
-        Ns<-sample(1:N,N/4)
-        if(N<=60)
+        Ns<-sample(1:N,ceiling(N/4))
+        if(N<=100)
           Ns<-1:N
 
         sigma_2_cv<-c()
