@@ -2,7 +2,7 @@
 ## Dichotomized functional response regression 
 Implementing Function-on-Scalar Regression model, in which the response function is dichotomized and observed sparsely.
 
-The output is a `dfrr-object`, which then can be injected into other methods/functions to postprocess the fitted model, including: `coefs.dfrr`,`fitted.dfrr`, `residuals.dfrr`, `predict.dfrr`, `eigen.dfrr`, `summary.dfrr`, `qq.dfrr`, `model.matrix.dfrr`, `plot.coefs.dfrr`, `plot.fitted.dfrr`, `plot.residuals.dfrr`, `plot.predict.dfrr`, `plot.eigen.dfrr`, `plot.residuals.dfrr`
+The output is a `dfrr-object`, which then can be injected into other methods/functions to postprocess the fitted model, including: `coef.dfrr`,`fitted.dfrr`, `residuals.dfrr`, `predict.dfrr`, `fpca.dfrr`, `summary.dfrr`, `model.matrix.dfrr`, `plot.dfrr`, `plot.coef.dfrr`, `plot.fitted.dfrr`, `plot.residuals.dfrr`, `qq.dfrr`, `plot.predict.dfrr`, `plot.fpca.dfrr`
 
 ## Installation
 
@@ -41,18 +41,19 @@ summary(dfrr_fit)
 
 ##### Fitting dfrr model to the Madras Longitudinal Schizophrenia data
 data(madras)
-ydata<-data.frame(.obs=madras$id,.index=madras$month,.value=madras$y)
+
 ids<-unique(madras$id)
-q<-4
 N<-length(ids)
-xData<-data.frame(Age=rep(NA,N),Gender=rep(NA,N))
+
+ydata<-data.frame(.obs=madras$id,.index=madras$month,.value=madras$y)
+xdata<-data.frame(Age=rep(NA,N),Gender=rep(NA,N))
 for(i in 1:N){
   dt<-madras[madras$id==ids[i],]
-  xData[i,]<-c(dt$age[1],dt$gender[1])
+  xdata[i,]<-c(dt$age[1],dt$gender[1])
 }
-rownames(xData)<-ids
+rownames(xdata)<-ids
 
-madras_dfrr<-dfrr(Y~Age+Gender+Age*Gender, data=xData, ydata=ydata, J=11,T_E=5)
+madras_dfrr<-dfrr(Y~Age+Gender+Age*Gender, data=xdata, ydata=ydata, J=11,T_E=5)
 coefs<-coef(madras_dfrr)
 plot(coefs)
 
