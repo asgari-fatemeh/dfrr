@@ -1,4 +1,4 @@
-# dfrr
+# dfrr [![Build Status](https://travis-ci.com/asgari-fatemeh/dfrr.svg?branch=master)](https://travis-ci.com/asgari-fatemeh/dfrr)
 ## Dichotomized functional response regression 
 Implementing Function-on-Scalar Regression model, in which the response function is dichotomized and observed sparsely.
 
