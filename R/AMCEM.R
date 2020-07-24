@@ -639,20 +639,21 @@ AMCEM <-
         Sigma_t<-(1/(N-q))*zusum
 
         if(estimate_b){
-          S1<-matrix(0,q*J,q*J)
-          S3<-matrix(0,q*J,1)
-          for (i1 in 1:N) {
-            S1<-t(X[[i1]])%*%solve(Sigma_t)%*%X[[i1]]+S1
-            S3<-t(X[[i1]])%*%solve(Sigma_t)%*%t(t(zsum[i1,]))+S3
-          }
-
-          if(t_E<=length(lambdas_smoothing))
-            lambda<-lambdas_smoothing[t_E]
-          else
-            lambda<-tail(lambdas_smoothing,1)
-
-          P<-kronecker(diag(nrow=q),P2*lambda)
-          b0<-solve(S1+2*P)%*%S3
+          # S1<-matrix(0,q*J,q*J)
+          # S3<-matrix(0,q*J,1)
+          # for (i1 in 1:N) {
+          #   S1<-t(X[[i1]])%*%solve(Sigma_t)%*%X[[i1]]+S1
+          #   S3<-t(X[[i1]])%*%solve(Sigma_t)%*%t(t(zsum[i1,]))+S3
+          # }
+          #
+          # if(t_E<=length(lambdas_smoothing))
+          #   lambda<-lambdas_smoothing[t_E]
+          # else
+          #   lambda<-tail(lambdas_smoothing,1)
+          #
+          # P<-kronecker(diag(nrow=q),P2*lambda)
+          # b0<-solve(S1+2*P)%*%S3
+          b0<-zxsum%*%solve(t(XX)%*%XX)
 
         }
 
