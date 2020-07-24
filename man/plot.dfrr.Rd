@@ -4,11 +4,9 @@
 \alias{plot.dfrr}
 \title{Plot a dfrr fit}
 \usage{
-\method{plot}{dfrr}(dfrr_fit, ...)
+\method{plot}{dfrr}(x, ...)
 }
 \arguments{
-\item{dfrr_fit}{a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.}
-
 \item{...}{graphical parameters passed to \code{\link{plot.coef.dfrr}}}
 }
 \description{

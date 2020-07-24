@@ -7,7 +7,7 @@
 #'of zero and one, respectively.
 #'
 #'
-#'@param fitted.dfrr the output of the function \link{fitted.dfrr}
+#'@param x the output of the function \link{fitted.dfrr}
 #'@param id a vector of length one or more containing subject ids to plot. Must be matched with
 #' \code{rownames(<response>)} or the \code{.obs} column of \code{ydata}. Defaults to
 #'  all  subject ids.
@@ -35,9 +35,10 @@
 #'@method plot fitted.dfrr
 #'@export
 plot.fitted.dfrr <-
-function(fitted.dfrr,id=NULL,main=NULL,
+function(x,id=NULL,main=NULL,
                            col='blue',lwd=2,lty="solid",cex.circle=1,col.circle='black',ylim=NULL,...)
 {
+  fitted.dfrr<-x
   if(!is.null(main))
     if(is.na(main[1]))
       main<-""

@@ -4,10 +4,10 @@
 \alias{plot.coef.dfrr}
 \title{Plot dfrr coefficients}
 \usage{
-\method{plot}{coef.dfrr}(coefs, select = NULL, ask.hit.return = TRUE, ...)
+\method{plot}{coef.dfrr}(x, select = NULL, ask.hit.return = TRUE, ...)
 }
 \arguments{
-\item{coefs}{a \code{coef.dfrr}-object.}
+\item{x}{a \code{coef.dfrr}-object.}
 
 \item{select}{a vector of length one or more of indices of regression
 coefficients to plot.}

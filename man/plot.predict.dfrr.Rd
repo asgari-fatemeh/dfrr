@@ -5,7 +5,7 @@
 \title{Plot  dfrr predictions}
 \usage{
 \method{plot}{predict.dfrr}(
-  predict.dfrr,
+  x,
   id = NULL,
   conf.band.type = "BEc",
   conf.level = NULL,
@@ -20,7 +20,7 @@
 )
 }
 \arguments{
-\item{predict.dfrr}{a \code{predict.dfrr}-object}
+\item{x}{a \code{predict.dfrr}-object}
 
 \item{id}{a vector of length one or more containing subject ids to plot. Must be matched with
 \code{rownames(newdata)}. Defaults to

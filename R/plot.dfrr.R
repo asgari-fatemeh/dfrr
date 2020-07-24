@@ -28,7 +28,8 @@
 #'@export
 
 plot.dfrr <-
-function(dfrr_fit,...){
+function(x,...){
+  dfrr_fit<-x
  #Plotting regression coefficients
 coefs<-coef.dfrr(dfrr_fit)
 p<-nrow(coefs)

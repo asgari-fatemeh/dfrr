@@ -2,9 +2,8 @@
 #'
 #'The output gives the qq-plot of estimated measurment error.
 #'
-#'@param residuals.dfrr a \code{residuals.dfrr}-object.
+#'@param x a \code{residuals.dfrr}-object.
 #'@param ... graphical parameters passed to \code{car::\link[car]{qqPlot}}
-#'@inheritParams fitted.dfrr
 #'
 #'@examples
 #'\donttest{
@@ -25,7 +24,8 @@
 #'
 #' @export
 #'
-plot.residuals.dfrr<-function(residuals.dfrr,...){
+plot.residuals.dfrr<-function(x,...){
+  residuals.dfrr<-x
 
   dfrr_fit<-attr(residuals.dfrr,"dfrr_fit")
   standardized<-attr(residuals.dfrr,"standardized")
@@ -66,7 +66,8 @@ print(4)
 #' @rdname plot.residuals.dfrr
 #' @method qq dfrr
 #' @export
-qq.dfrr<-function(dfrr_fit,...){
+qq.dfrr<-function(x,...){
+  dfrr_fit<-x
   resids<-residuals.dfrr(dfrr_fit)
   plot.residuals.dfrr(resids,...)
 

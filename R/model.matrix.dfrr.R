@@ -2,11 +2,14 @@
 #'
 #' Obtain model matrix for a dfrr fit
 #'
-#' @inheritParams coef.dfrr
+#'
+#' @inheritParams summary.dfrr
 #'
 #' @method model.matrix dfrr
+#'
 #' @export
 
-model.matrix.dfrr<-function(dfrr_fit){
+model.matrix.dfrr<-function(object,...){
+  dfrr_fit<-object
     dfrr_fit$modelMatrix
 }

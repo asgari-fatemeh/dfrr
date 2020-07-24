@@ -5,16 +5,17 @@
 \title{Get estimated coefficients from a dfrr fit}
 \usage{
 \method{coef}{dfrr}(
-  dfrr_fit,
+  object,
   standardized = NULL,
   unstandardized = !standardized,
   return.fourier.coefs = NULL,
   return.evaluations = !return.fourier.coefs,
-  time_to_evaluate = NULL
+  time_to_evaluate = NULL,
+  ...
 )
 }
 \arguments{
-\item{dfrr_fit}{a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.}
+\item{object}{a \code{dfrr}-object}
 
 \item{standardized, unstandardized}{a \code{boolean} indicating whether stanadrdized/unstandardized regression coefficients are reported.
 Only standardized regression coefficients are identifiable, thus the arugment is defaults to \code{standardized=TRUE}.}
@@ -23,7 +24,7 @@ Only standardized regression coefficients are identifiable, thus the arugment is
 (\code{return.fourier.coefs=TRUE}), or evaluations of the regression coefficients (\code{return.evaluations=TRUE}).
 Defaults to \code{return.fourier.coefs=TRUE}.}
 
-\item{time_to_evaluate}{a numeric vector indicating the set of time points for evaluating the fitted latent functions, for the case of \code{return.evaluations=TRUE}.}
+\item{...}{dot argument, just for consistency with the generic function}
 }
 \description{
 Returns estimations of the smooth functional regression coefficients \eqn{\beta(t)}.

@@ -49,10 +49,11 @@
 #'
 #'@export
 predict.dfrr <-
-function(dfrr_fit,newdata,newydata=NULL,standardized=NULL,unstandardized=!standardized,
+function(object,newdata,newydata=NULL,standardized=NULL,unstandardized=!standardized,
          return.fourier.coefs=NULL,
          return.evaluations=!return.fourier.coefs,
-                       time_to_evaluate=NULL){
+                       time_to_evaluate=NULL,...){
+  dfrr_fit<-object
   standardized<-paired.args.check(standardized,
                                   ifelse(missing(unstandardized),NA,unstandardized),
                                   "Please specify 'standardized' or 'unstandardizedd' coefficients must be reported",

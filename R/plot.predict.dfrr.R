@@ -9,7 +9,7 @@
 #'of zero and one, respectively. Confidence bands can also be added to the
 #' plot if the package \href{https://github.com/hpchoi/fregion}{\code{fregion}} is installed.
 #'
-#'@param predict.dfrr a \code{predict.dfrr}-object
+#'@param x a \code{predict.dfrr}-object
 #'@param id a vector of length one or more containing subject ids to plot. Must be matched with
 #' \code{rownames(newdata)}. Defaults to
 #'  all subject ids.
@@ -56,9 +56,10 @@
 #'  \emph{Journal of the Royal Statistical Society, Series B Statistical methodology} 2018; 80:239-260.
 #'
 plot.predict.dfrr <-
-  function(predict.dfrr,id=NULL,
+  function(x,id=NULL,
            conf.band.type="BEc",conf.level=NULL,
            main=id,col='blue',lwd=2,lty="solid",cex.circle=1,col.circle='black',ylim=NULL,...){
+    predict.dfrr<-x
 
     #conf.band.type<-match.arg(conf.band.type)
 
@@ -116,10 +117,11 @@ plot.predict.dfrr <-
 
       pred<-t(E2)%*%t(t(coefs[i,]))
 
+      if(FALSE)
       if(plot_bands){
         ##### Plotting prediction intervals
         hat.cov.m<-t(E2)%*%zzt[[i]]%*%E2
-        frg<-fregion::fregion.band(pred,hat.cov.m,N=1,type=conf.band.type,conf.level=conf.level)
+        ####frg<-fregion::fregion.band(pred,hat.cov.m,N=1,type=conf.band.type,conf.level=conf.level)
       }
 
       lbl<-paste0("Prediction (Id: ",id[i],")")
@@ -145,6 +147,7 @@ plot.predict.dfrr <-
       else
         plot(time,pred,'l',main=main[i],ylim=ylim2,col=col,lwd=lwd,lty=lty,...)
 
+      if(FALSE)
       if(plot_bands){
         lines(time,frg[,2],lty='dashed',col='red',lwd=1)
         lines(time,frg[,3],lty='dashed',col='red',lwd=1)

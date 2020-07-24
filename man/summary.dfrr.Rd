@@ -4,10 +4,12 @@
 \alias{summary.dfrr}
 \title{Summary for a dfrr fit}
 \usage{
-\method{summary}{dfrr}(dfrr_fit)
+\method{summary}{dfrr}(object, ..)
 }
 \arguments{
-\item{dfrr_fit}{a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.}
+\item{object}{a \code{dfrr}-object}
+
+\item{...}{dot argument, just for consistency with the generic function}
 }
 \description{
 Summarise a fitted \code{dfrr}-object. Not implemented.

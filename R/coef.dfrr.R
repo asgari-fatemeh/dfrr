@@ -12,7 +12,7 @@
 #' Consider that the unstandardized estimations are not identifiable. So, it is recommended to
 #' extract and report the standardized estimations.
 #'
-#'@inheritParams fitted.dfrr
+#'@inheritParams summary.dfrr
 #'@param standardized,unstandardized a \code{boolean} indicating whether stanadrdized/unstandardized regression coefficients are reported.
 #' Only standardized regression coefficients are identifiable, thus the arugment is defaults to \code{standardized=TRUE}.
 #'@param return.fourier.coefs,return.evaluations a \code{boolean} indicating whether the Fourier coefficients of regression coefficients are returned
@@ -41,10 +41,11 @@
 
 
 coef.dfrr <-
-function(dfrr_fit,standardized=NULL,unstandardized=!standardized,
+function(object,standardized=NULL,unstandardized=!standardized,
                     return.fourier.coefs=NULL,
                     return.evaluations=!return.fourier.coefs,
-                    time_to_evaluate=NULL){
+                    time_to_evaluate=NULL,...){
+  dfrr_fit<-object
 
   return.principal.components<-FALSE
 

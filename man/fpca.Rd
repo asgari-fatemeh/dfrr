@@ -7,8 +7,6 @@
 fpca(dfrr_fit, standardized = NULL, unstandardized = !standardized)
 }
 \arguments{
-\item{dfrr_fit}{a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.}
-
 \item{standardized, unstandardized}{a \code{boolean} indicating whether stanadrdized/unstandardized pricipal components/eigen-functions are reported.
 Only standardized pricipal components/eigen-functions are identifiable, thus the arugment is defaults to \code{standardized=TRUE}.}
 }

@@ -4,10 +4,12 @@
 \alias{model.matrix.dfrr}
 \title{Obtain model matrix for a dfrr fit}
 \usage{
-\method{model.matrix}{dfrr}(dfrr_fit)
+\method{model.matrix}{dfrr}(object, ...)
 }
 \arguments{
-\item{dfrr_fit}{a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.}
+\item{object}{a \code{dfrr}-object}
+
+\item{...}{dot argument, just for consistency with the generic function}
 }
 \description{
 Obtain model matrix for a dfrr fit

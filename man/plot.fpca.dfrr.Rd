@@ -5,7 +5,7 @@
 \title{Plot dfrr functional principal components}
 \usage{
 \method{plot}{fpca.dfrr}(
-  fpca.dfrr,
+  x,
   plot.eigen.functions = TRUE,
   select = NULL,
   plot.contour = FALSE,
@@ -19,7 +19,7 @@
 )
 }
 \arguments{
-\item{fpca.dfrr}{a \code{fpca.dfrr}-object to be plotted. It is the output of the function \code{\link{fpca}()}}
+\item{x}{a \code{fpca.dfrr}-object to be plotted. It is the output of the function \code{\link{fpca}()}}
 
 \item{plot.eigen.functions}{a \code{boolean} indicating whether to print the principal components/eigen-functions. Defaults to TRUE.}
 

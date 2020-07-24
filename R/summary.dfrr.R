@@ -2,13 +2,15 @@
 #'
 #'Summarise a fitted \code{dfrr}-object. Not implemented.
 #'
-#'@inheritParams coef.dfrr
+#'@param object a \code{dfrr}-object
+#'@param ... dot argument, just for consistency with the generic function
 #'
 #'@method summary dfrr
 #'
 #'@export
 #'
 summary.dfrr <-
-function(dfrr_fit){
+function(object,..){
+  dfrr_fit<-object
   warning("Not yet implemented...\r\n Use the functions coef(), fpca(), fitted(), and residuals() to see the outputs.")
 }

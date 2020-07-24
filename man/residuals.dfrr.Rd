@@ -4,13 +4,15 @@
 \alias{residuals.dfrr}
 \title{Obtain residuals for a dfrr model}
 \usage{
-\method{residuals}{dfrr}(dfrr_fit, standardized = NULL, unstandardized = !standardized)
+\method{residuals}{dfrr}(object, standardized = NULL, unstandardized = !standardized, ...)
 }
 \arguments{
-\item{dfrr_fit}{a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.}
+\item{object}{a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.}
 
 \item{standardized, unstandardized}{a \code{boolean} indicating whether stanadrdized/unstandardized residuals are reported.
 Defaults to \code{standardized=TRUE}.}
+
+\item{...}{dot argument, just for consistency with the generic function}
 }
 \description{
 Returns the residuals of a fitted \code{dfrr} model.

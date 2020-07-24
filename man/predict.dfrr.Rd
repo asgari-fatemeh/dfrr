@@ -5,18 +5,19 @@
 \title{Prediction for dichotomized function-on-scalar regression}
 \usage{
 \method{predict}{dfrr}(
-  dfrr_fit,
+  object,
   newdata,
   newydata = NULL,
   standardized = NULL,
   unstandardized = !standardized,
   return.fourier.coefs = NULL,
   return.evaluations = !return.fourier.coefs,
-  time_to_evaluate = NULL
+  time_to_evaluate = NULL,
+  ...
 )
 }
 \arguments{
-\item{dfrr_fit}{a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.}
+\item{object}{a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.}
 
 \item{newdata}{a \code{data.frame} containing the values of all of the
 model covariates at which the latent functional response is going  to be
@@ -33,6 +34,8 @@ Defaults to \code{standardized=TRUE}.}
 Defaults to \code{return.evaluations=TRUE}.}
 
 \item{time_to_evaluate}{a numeric vector indicating the set of time points for evaluating the predictions, for the case of \code{return.evaluations=TRUE}.}
+
+\item{...}{dot argument, just for consistency with the generic function}
 }
 \description{
 Takes a \code{dfrr}-object created by \code{\link{dfrr}()} and returns predictions

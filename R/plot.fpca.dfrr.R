@@ -16,7 +16,7 @@
 #'  \code{plot.3dsurface.pars}.
 #'
 #'@inheritParams fitted.dfrr
-#'@param fpca.dfrr a \code{fpca.dfrr}-object to be plotted. It is the output of the function \code{\link{fpca}()}
+#'@param x a \code{fpca.dfrr}-object to be plotted. It is the output of the function \code{\link{fpca}()}
 #'@param plot.contour a \code{boolean} indicating whether to print the contour plot of the kernel function.
 #'It requires \code{\link[ggplot2]{ggplot2-package}} to be installed. Defaults to FALSE.
 #'@param plot.eigen.functions a \code{boolean} indicating whether to print the principal components/eigen-functions. Defaults to TRUE.
@@ -50,7 +50,7 @@
 #'
 #'@export
 plot.fpca.dfrr <-
-function(fpca.dfrr,plot.eigen.functions=TRUE,select=NULL,plot.contour=FALSE,plot.3dsurface=FALSE,
+function(x,plot.eigen.functions=TRUE,select=NULL,plot.contour=FALSE,plot.3dsurface=FALSE,
                           plot.contour.pars=list(breaks=NULL,minor_breaks = NULL,
                                                  n.breaks = NULL,
                                                  labels = NULL,
@@ -60,6 +60,7 @@ function(fpca.dfrr,plot.eigen.functions=TRUE,select=NULL,plot.contour=FALSE,plot
                           plot.3dsurface.pars=list(xlab=NULL,ylab=NULL,zlab=NULL,
                                                     title=NULL,colors=NULL),ask.hit.return=TRUE,...
                           ){
+  fpca.dfrr<-x
 
   attr(fpca.dfrr,"standardized") ->standardized
   attr(fpca.dfrr,"dfrr_fit")     ->dfrr_fit

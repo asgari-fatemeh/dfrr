@@ -1,5 +1,6 @@
 #'@export
 print.dfrr <-
-function(dfrr_fit,...){
+function(x,...){
+  dfrr_fit<-x
   print("Print.dfrr method not implemented")
 }

@@ -5,7 +5,7 @@
 \title{Plot dfrr fitted latent functions}
 \usage{
 \method{plot}{fitted.dfrr}(
-  fitted.dfrr,
+  x,
   id = NULL,
   main = NULL,
   col = "blue",
@@ -18,7 +18,7 @@
 )
 }
 \arguments{
-\item{fitted.dfrr}{the output of the function \link{fitted.dfrr}}
+\item{x}{the output of the function \link{fitted.dfrr}}
 
 \item{id}{a vector of length one or more containing subject ids to plot. Must be matched with
 \code{rownames(<response>)} or the \code{.obs} column of \code{ydata}. Defaults to

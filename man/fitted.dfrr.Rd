@@ -5,16 +5,17 @@
 \title{Obtain fitted curves for a dfrr model}
 \usage{
 \method{fitted}{dfrr}(
-  dfrr_fit,
+  object,
   return.fourier.coefs = NULL,
   return.evaluations = !return.fourier.coefs,
   time_to_evaluate = NULL,
   standardized = NULL,
-  unstandardized = !standardized
+  unstandardized = !standardized,
+  ...
 )
 }
 \arguments{
-\item{dfrr_fit}{a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.}
+\item{object}{a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.}
 
 \item{return.fourier.coefs, return.evaluations}{a \code{boolean} indicating whether the Fourier coefficients of the fitted curves are returned
 (\code{return.fourier.coefs=TRUE}), or evaluations of the fitted curves (\code{return.evaluations=TRUE}).
@@ -24,6 +25,8 @@ Defaults to \code{return.fourier.coefs=TRUE}.}
 
 \item{standardized, unstandardized}{a \code{boolean} indicating whether stanadrdized/unstandardized fitted latent curves is reported.
 Only standardized fitted curves are identifiable, thus the arugment is defaults to \code{standardized=TRUE}.}
+
+\item{...}{dot argument, just for consistency with the generic function}
 }
 \description{
 Fitted curves refer to the estimations of latent functional response curves.

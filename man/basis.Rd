@@ -6,9 +6,6 @@
 \usage{
 basis(dfrr_fit)
 }
-\arguments{
-\item{dfrr_fit}{a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.}
-}
 \description{
 Returns the basis functions employed in fitting a dfrr-object.
 }

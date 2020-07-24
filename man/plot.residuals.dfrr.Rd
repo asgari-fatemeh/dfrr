@@ -5,16 +5,14 @@
 \alias{qq.dfrr}
 \title{QQ-plot for dfrr residuals}
 \usage{
-\method{plot}{residuals.dfrr}(residuals.dfrr, ...)
+\method{plot}{residuals.dfrr}(x, ...)
 
-\method{qq}{dfrr}(dfrr_fit, ...)
+\method{qq}{dfrr}(x, ...)
 }
 \arguments{
-\item{residuals.dfrr}{a \code{residuals.dfrr}-object.}
+\item{x}{a \code{residuals.dfrr}-object.}
 
 \item{...}{graphical parameters passed to \code{car::\link[car]{qqPlot}}}
-
-\item{dfrr_fit}{a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.}
 }
 \description{
 The output gives the qq-plot of estimated measurment error.

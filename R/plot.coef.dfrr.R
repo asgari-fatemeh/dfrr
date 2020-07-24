@@ -2,7 +2,7 @@
 #'
 #'Plot a  \code{coef.dfrr} object. The output is the plot of regression coefficients.
 #'
-#'@param coefs a \code{coef.dfrr}-object.
+#'@param x a \code{coef.dfrr}-object.
 #'@param select a vector of length one or more of indices of regression
 #' coefficients to plot.
 #'@param ... graphical parameters passed to \code{plot}.
@@ -26,7 +26,8 @@
 #'@export
 
 
-plot.coef.dfrr<-function(coefs,select=NULL,ask.hit.return=TRUE,...){
+plot.coef.dfrr<-function(x,select=NULL,ask.hit.return=TRUE,...){
+  coefs<-x
 
   attr(coefs,"dfrr_fit")->dfrr_fit
   attr(coefs,"standardized")->standardized

@@ -38,7 +38,8 @@
 #'
 #'
 residuals.dfrr <-
-function(dfrr_fit,standardized=NULL,unstandardized=!standardized){
+function(object,standardized=NULL,unstandardized=!standardized,...){
+  dfrr_fit<-object
   standardized<-paired.args.check(standardized,
                                   ifelse(missing(unstandardized),NA,unstandardized),
                                   "Please specify 'standardized' or 'unstandardizedd' coefficients must be reported",

@@ -13,13 +13,15 @@
 #' Consider that the unstandardized estimations are not identifiable. So, it is recommended to
 #' extract and report the standardized estimations.
 #'
-#' @param dfrr_fit a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.
+#' @param object a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.
 #' @param return.fourier.coefs,return.evaluations a \code{boolean} indicating whether the Fourier coefficients of the fitted curves are returned
 #'              (\code{return.fourier.coefs=TRUE}), or evaluations of the fitted curves (\code{return.evaluations=TRUE}).
 #'              Defaults to \code{return.fourier.coefs=TRUE}.
 #' @param time_to_evaluate a numeric vector indicating the set of time points for evaluating the fitted latent functions, for the case of \code{return.evaluations=TRUE}.
 #' @param standardized,unstandardized a \code{boolean} indicating whether stanadrdized/unstandardized fitted latent curves is reported.
 #' Only standardized fitted curves are identifiable, thus the arugment is defaults to \code{standardized=TRUE}.
+#' @param ... dot argument, just for consistency with the generic function
+
 #'
 #' @seealso \code{\link{plot.fitted.dfrr}}
 #'
@@ -39,8 +41,9 @@
 #'
 #' @export
 fitted.dfrr <-
-function(dfrr_fit,return.fourier.coefs=NULL,return.evaluations=!return.fourier.coefs,
-         time_to_evaluate=NULL,standardized=NULL,unstandardized=!standardized){
+function(object,return.fourier.coefs=NULL,return.evaluations=!return.fourier.coefs,
+         time_to_evaluate=NULL,standardized=NULL,unstandardized=!standardized,...){
+  dfrr_fit<-object
 
   standardized<-paired.args.check(standardized,
                                   ifelse(missing(unstandardized),NA,unstandardized),
