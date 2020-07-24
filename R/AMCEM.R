@@ -613,10 +613,6 @@ AMCEM <-
 
         zsum[i,]<-colMeans(zs)
 
-      #Density
-        mvtnorm::dmvnorm(zprimes,mean=c(vnu0),sigma=sigma[[i]])*
-          mvtnorm::dmvnorm(zs,mean=c(vnu0),sigma=sigma[[i]])
-
       }
 
       zusum<-matrix(0,J,J)
