@@ -326,9 +326,12 @@ AMCEM <-
         rejRate<-rejRate_flatRun
       }else{
 
-        Ns<-sample(1:N,ceiling(N/4))
-        if(N<=100)
+        if(N<=100){
           Ns<-1:N
+        }else{
+          Ns<-sample(1:N,ceiling(N/4))
+        }
+
 
         sigma_2_cv<-c()
         EE_cv<-c()

@@ -9,14 +9,15 @@
 #'@param ask.hit.return a boolean indicating whether to wait for interaction of the user between any two plots.
 #'@examples
 #' set.seed(2000)
-#' N<-50;M<-24
+#' \donttest{N<-50;M<-24}
+#' \dontshow{N<-30;M<-12}
 #' X<-rnorm(N,mean=0)
 #' time<-seq(0,1,length.out=M)
-#' Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
+#' Y<-simulate_simple_dfrr(beta0=function(t){cos(pi*t+pi)},
 #'                         beta1=function(t){2*t},
 #'                         X=X,time=time)
 #' \donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
-#' \dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=3)}
+#' \dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=1)}
 #' coefs<-coef(dfrr_fit)
 #' plot(coefs)
 #'
