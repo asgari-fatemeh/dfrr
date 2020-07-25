@@ -9,6 +9,8 @@
 #'
 #'@inheritParams fpca
 #'@param ... graphical parameters passed to \code{\link{plot.coef.dfrr}}
+#'@param plot.kernel a boolean indicating whether plots the kernel function or not.
+#'\code{ggplot2}-package and \code{plotly}-package is required to plot contour and 3d surface of kernel function.
 #'@examples
 #'set.seed(2000)
 #' \donttest{N<-50;M<-24}
@@ -21,14 +23,14 @@
 #' \donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
 #' \dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=1)}
 #' \donttest{plot(dfrr_fit)}
-#' \dontshow{plot(dfrr_fit,no_ggplot_plotly=TRUE)}
+#' \dontshow{plot(dfrr_fit,plot.kernel=FALSE)}
 #'
 #'@method plot dfrr
 #'
 #'@export
 
 plot.dfrr <-
-function(x,...){
+function(x,plot.kernel=TRUE,...){
   dfrr_fit<-x
  #Plotting regression coefficients
 coefs<-coef.dfrr(dfrr_fit)
@@ -82,7 +84,7 @@ for (i in 1:nographs) {
 }
 
 dots<-list(...)
-if(!("no_ggplot_plotly" %in% names(dots))){
+if(plot.kernel){
   #plotting contour of kernel function
   plot.fpca.dfrr(pcs,plot.contour=TRUE,plot.eigen.functions=FALSE)
   invisible(readline(prompt="Hit <Returen> to see next plot:"))

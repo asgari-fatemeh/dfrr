@@ -4,9 +4,12 @@
 \alias{plot.dfrr}
 \title{Plot a dfrr fit}
 \usage{
-\method{plot}{dfrr}(x, ...)
+\method{plot}{dfrr}(x, plot.kernel = TRUE, ...)
 }
 \arguments{
+\item{plot.kernel}{a boolean indicating whether plots the kernel function or not.
+\code{ggplot2}-package and \code{plotly}-package is required to plot contour and 3d surface of kernel function.}
+
 \item{...}{graphical parameters passed to \code{\link{plot.coef.dfrr}}}
 }
 \description{
@@ -29,6 +32,6 @@ Y<-simulate_simple_dfrr(beta0=function(t){cos(pi*t+pi)},
 \donttest{dfrr_fit<-dfrr(Y~X,yind=time)}
 \dontshow{dfrr_fit<-dfrr(Y~X,yind=time,T_E=1)}
 \donttest{plot(dfrr_fit)}
-\dontshow{plot(dfrr_fit,no_ggplot_plotly=TRUE)}
+\dontshow{plot(dfrr_fit,plot.kernel=FALSE)}
 
 }

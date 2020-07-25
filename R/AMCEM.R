@@ -272,7 +272,7 @@ AMCEM <-
 
 
 
-      lambda_tol<-lambda_thresh<-lambda_log_slope<-Inf
+      lambda_tol<-lambda_thresh<-lambda_log_slope<-sigma_slope<-Inf
       lambda_log_slope_base<-1
 
       sigma_tol<-sigma_thresh<-Inf
@@ -284,7 +284,7 @@ AMCEM <-
         lambda_cor<-abs(cor(lambdam[(t_E-t_E_tol+1):(t_E-1)],
                             lambdam[(t_E-t_E_tol):(t_E-1-1)]))
         sigma_cor<-abs(cor(sigma_2s[(t_E-t_E_tol+1):(t_E-1)],
-                           sigma_2s[(t_E-t_E_tol):(t_E-1-1)]))
+                           sigma_2s[(t_E-t_E_tol-2):(t_E-1-3)]))
 
         # lambda_log_slope<-abs(log(lambdam)[t_E-1]-log(lambdam)[t_E-t_E_tol-1])/t_E_tol
         # lambda_log_slope_base<-abs(log(lambdam)[t_E_tol+2]-log(lambdam)[2])/(t_E_tol)
@@ -292,6 +292,8 @@ AMCEM <-
 
         lambda_log_slope<-abs((lambdam)[t_E-1]-(lambdam)[t_E-t_E_tol-1])/t_E_tol
         lambda_log_slope_base<-abs((lambdam)[t_E_tol+2]-(lambdam)[2])/(t_E_tol)
+
+        sigma_slope<-abs((sigma_2s)[t_E-1]-(sigma_2s)[t_E-t_E_tol-1])/t_E_tol
 
       }
 
@@ -301,7 +303,7 @@ AMCEM <-
         sigma_thresh<-sigma_2s[t_E-1]*sigma_tol_sd
       }
       print(paste0("lambda_slope: ",lambda_log_slope," , ",lambda_log_slope_base))
-      if(lambda_cor<cor_lambda | lambda_log_slope<rel_tol_loglombdaSlope | lambda_log_slope/lambda_log_slope_base<0.02){
+      if(lambda_cor<cor_lambda | lambda_log_slope<rel_tol_loglombdaSlope | lambda_log_slope/lambda_log_slope_base<0.01){
         if(!lambda_fixed)
         {
           time_lambda<-Sys.time()
@@ -312,7 +314,7 @@ AMCEM <-
         lambda_fixed<-FALSE
       }
 
-      if(sigma_cor<cor_sigma)
+      if(sigma_cor<cor_sigma & sigma_slope<0.001)
       {
         if(!sigma_fixed){
           time_sigma<-Sys.time()
@@ -322,13 +324,15 @@ AMCEM <-
       }else{
         sigma_fixed<-FALSE
       }
+      if(!quiet)
+        print(paste0("Simga2 slope: ",sigma_slope))
 
       rejRate<-rejRate_flatRun
       if(t_E<=flat_run){
         rejRate<-rejRate_flatRun
       }else{
 
-        if(N<=100){
+        if((N*min(M))<=1000){
           Ns<-1:N
         }else{
           Ns<-sample(1:N,ceiling(N/4))
@@ -494,6 +498,8 @@ AMCEM <-
           cvals[r]<- (N-q)/2*log(max(1e-24,det(sigma_theta_cv[[r]])))+sum(M[Ns])/2*log(sigma_2_cv[r])
           #cvals[r]<- cvals[r]+1/2*log(det(kronecker(t(Xs)%*%Xs,solve(sigma_theta_cv[[r]]))))
           cvals[r]<- cvals[r]+1/2*EE_cv[r]
+
+          #cvals[r]<- sigma_2_cv[r]
         }
 
 
@@ -833,8 +839,7 @@ AMCEM <-
       sigma_pre<-eval1
 
 
-      if(imax_count>max_iters_after_rejRate_one |
-         all(sigma_fixed,lambda_fixed)){
+      if(all(sigma_fixed,lambda_fixed)){
         AMCEM_converged<-TRUE
         break
       }

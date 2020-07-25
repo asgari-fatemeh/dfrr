@@ -64,7 +64,7 @@ plot.predict.dfrr <-
     #conf.band.type<-match.arg(conf.band.type)
 
     plot_bands<-!is.null(conf.level)
-    if(!is.null(conf.level))
+    if(!is.null(conf.level) & !is.null(conf.band.type))
       if(any(conf.level>=1 | conf.level<=0))
         plot_bands<-FALSE
 
@@ -73,7 +73,7 @@ plot.predict.dfrr <-
     if(is.null(conf.band.type) | !fregion_installed)
       plot_bands<-FALSE
 
-    if(!is.null(conf.band.type) & !fregion_installed)
+    if(plot_bands & !fregion_installed)
       warning(paste0("The package 'fregion' must be installed in order to plot confidence bands.\r\n",
                      'run devtools::install_github("hpchoi/fregion") to install the'," 'fregion' package."))
 
