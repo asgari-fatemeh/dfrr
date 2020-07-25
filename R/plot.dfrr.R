@@ -7,7 +7,7 @@
 #' Plotting the 3d surface  of the kernel function is also depends on the package \code{plotly}.
 #'To produce the qq-plot, the package \code{car} must be installed.
 #'
-#'@inheritParams fpca
+#'@inheritParams plot.fitted.dfrr
 #'@param ... graphical parameters passed to \code{\link{plot.coef.dfrr}}
 #'@param plot.kernel a boolean indicating whether plots the kernel function or not.
 #'\code{ggplot2}-package and \code{plotly}-package is required to plot contour and 3d surface of kernel function.
@@ -52,6 +52,9 @@ for (i in 1:nographs) {
   ind1<-(i-1)*ppg+1
   ind2<-min(p,ppg*i)
   plot.coef.dfrr(coefs,select=ind1:ind2,ask.hit.return=FALSE,...)
+  if(ind2<(ppg*i))
+    for(ii in (ind2+1):(ppg*i))
+      plot.new
   invisible(readline(prompt="Hit <Returen> to see next plot:"))
 
 }
@@ -79,6 +82,9 @@ for (i in 1:nographs) {
   ind1<-(i-1)*ppg+1
   ind2<-min(p,ppg*i)
   plot.fpca.dfrr(pcs,select=ind1:ind2,ask.hit.return=FALSE)
+  if(ind2<(ppg*i))
+    for(ii in (ind2+1):(ppg*i))
+      plot.new
   invisible(readline(prompt="Hit <Returen> to see next plot:"))
 
 }

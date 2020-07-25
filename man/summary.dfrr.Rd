@@ -4,7 +4,7 @@
 \alias{summary.dfrr}
 \title{Summary for a dfrr fit}
 \usage{
-\method{summary}{dfrr}(object, ..)
+\method{summary}{dfrr}(object, ...)
 }
 \arguments{
 \item{object}{a \code{dfrr}-object}

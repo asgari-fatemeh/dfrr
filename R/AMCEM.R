@@ -303,7 +303,7 @@ AMCEM <-
         sigma_thresh<-sigma_2s[t_E-1]*sigma_tol_sd
       }
       print(paste0("lambda_slope: ",lambda_log_slope," , ",lambda_log_slope_base))
-      if(lambda_cor<cor_lambda | lambda_log_slope<rel_tol_loglombdaSlope | lambda_log_slope/lambda_log_slope_base<0.01){
+      if(lambda_cor<cor_lambda | lambda_log_slope<rel_tol_loglombdaSlope | lambda_log_slope/lambda_log_slope_base<0.1){
         if(!lambda_fixed)
         {
           time_lambda<-Sys.time()
@@ -314,7 +314,8 @@ AMCEM <-
         lambda_fixed<-FALSE
       }
 
-      if(sigma_cor<cor_sigma & sigma_slope<0.001)
+      # if(sigma_cor<cor_sigma & sigma_slope<0.01)
+      if(sigma_slope<0.01)
       {
         if(!sigma_fixed){
           time_sigma<-Sys.time()
@@ -499,7 +500,7 @@ AMCEM <-
           #cvals[r]<- cvals[r]+1/2*log(det(kronecker(t(Xs)%*%Xs,solve(sigma_theta_cv[[r]]))))
           cvals[r]<- cvals[r]+1/2*EE_cv[r]
 
-          #cvals[r]<- sigma_2_cv[r]
+          cvals[r]<- sigma_2_cv[r]
         }
 
 

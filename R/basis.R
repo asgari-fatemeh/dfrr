@@ -27,6 +27,7 @@
 #'
 #' @export
 basis <-
-function(dfrr_fit){
+function(object){
+  dfrr_fit<-object
   dfrr_fit$basis
 }

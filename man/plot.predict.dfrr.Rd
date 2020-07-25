@@ -7,8 +7,6 @@
 \method{plot}{predict.dfrr}(
   x,
   id = NULL,
-  conf.band.type = "BEc",
-  conf.level = NULL,
   main = id,
   col = "blue",
   lwd = 2,
@@ -26,16 +24,6 @@
 \code{rownames(newdata)}. Defaults to
  all subject ids.}
 
-\item{conf.band.type}{a type of confidence band specified
-in package \href{https://github.com/hpchoi/fregion}{\code{fregion}}.
-Can be either NULL for omitting the confidence band from the plot, "BEc" for modified Scheffe style band constructing from a hyper-ellipsoid region,
-"Bs" for Parametric bootstrap simultaneous confidence band, or any other \code{conf.band.type} acceptable to
-package \href{https://github.com/hpchoi/fregion}{\code{fregion}}. Defaults to NULL. See References.
-\cr
-Confidence bands are drawn if the \code{conf.level} argument is set to a valid value in the interval (0,1).}
-
-\item{conf.level}{confidence levels for the bands to achieve. Defaults to NULL.}
-
 \item{main}{a vector of length one or \code{length(id)} containing the title of plots.}
 
 \item{col, lwd, lty, ...}{graphical parameters passed to \code{\link{plot}}}
@@ -52,8 +40,7 @@ The output is the plot of predictions of latent functions given the new covariat
 For the case in which \code{newydata} is also given, the predictions are plotted
  over the observed binary sequence.
 The binary sequence is illustrated with circles and filled circles for the values
-of zero and one, respectively. Confidence bands can also be added to the
-plot if the package \href{https://github.com/hpchoi/fregion}{\code{fregion}} is installed.
+of zero and one, respectively.
 }
 \examples{
 set.seed(2000)

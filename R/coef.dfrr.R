@@ -18,6 +18,8 @@
 #'@param return.fourier.coefs,return.evaluations a \code{boolean} indicating whether the Fourier coefficients of regression coefficients are returned
 #'              (\code{return.fourier.coefs=TRUE}), or evaluations of the regression coefficients (\code{return.evaluations=TRUE}).
 #'              Defaults to \code{return.fourier.coefs=TRUE}.
+#'@param time_to_evaluate a numeric vector indicating the set of time points for evaluating the functional regression  coefficients, for the case of \code{return.evaluations=TRUE}.
+
 #'
 #'@seealso \code{\link{plot.coef.dfrr}}
 #'

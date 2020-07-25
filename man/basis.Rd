@@ -4,7 +4,10 @@
 \alias{basis}
 \title{Get the basis functions from a dfrr-object}
 \usage{
-basis(dfrr_fit)
+basis(object)
+}
+\arguments{
+\item{object}{a fitted \code{dfrr}-object obtained from invoking the function \code{\link{dfrr}}.}
 }
 \description{
 Returns the basis functions employed in fitting a dfrr-object.

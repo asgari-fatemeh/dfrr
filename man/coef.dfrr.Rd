@@ -24,6 +24,8 @@ Only standardized regression coefficients are identifiable, thus the arugment is
 (\code{return.fourier.coefs=TRUE}), or evaluations of the regression coefficients (\code{return.evaluations=TRUE}).
 Defaults to \code{return.fourier.coefs=TRUE}.}
 
+\item{time_to_evaluate}{a numeric vector indicating the set of time points for evaluating the functional regression  coefficients, for the case of \code{return.evaluations=TRUE}.}
+
 \item{...}{dot argument, just for consistency with the generic function}
 }
 \description{

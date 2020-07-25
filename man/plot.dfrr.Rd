@@ -7,6 +7,8 @@
 \method{plot}{dfrr}(x, plot.kernel = TRUE, ...)
 }
 \arguments{
+\item{x}{the output of the function \link{fitted.dfrr}}
+
 \item{plot.kernel}{a boolean indicating whether plots the kernel function or not.
 \code{ggplot2}-package and \code{plotly}-package is required to plot contour and 3d surface of kernel function.}
 
