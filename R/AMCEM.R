@@ -10,8 +10,9 @@ AMCEM <-
     time,
     xData=NULL, #Nxq matrix of covariates
     T_E=500, #MaxNumber of E_steps
-    T_G=80, #Number of samples to estimate integrals at each step
-    T_G_cv=20,
+    min_T_E=1, #Minimum number of EM iteration
+    T_G=200, #Number of samples to estimate integrals at each step
+    T_G_cv=100,
     reltol=0.005, #b,sigma0,sigma_2
     J=NA,
     lambda_tol_sd=0.05,
@@ -22,7 +23,8 @@ AMCEM <-
     ids=NULL,
     rangeval=c(0,1),
     normalize_beta=FALSE,
-    basis=NULL
+    basis=NULL,
+    standardized=FALSE
   ){
     method<-match.arg(method)
     flat_run<-1
@@ -73,7 +75,7 @@ AMCEM <-
     cor_lambda<-0.5
 
 
-    t_E_tol<-10
+    t_E_tol<-20
     tol_b<-reltol*1.5
     tol_sigma0<-reltol
 
@@ -89,7 +91,8 @@ AMCEM <-
     burn.in.samples.light<-10
     t_G_multiplication<-1.02
 
-    Rejrates<-c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1)
+    #Rejrates<-c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.99)
+    Rejrates<-c(0.2,0.4,0.6,0.8,1)
     #set.seed(2000)
 
 
@@ -286,12 +289,12 @@ AMCEM <-
         sigma_cor<-abs(cor(sigma_2s[(t_E-t_E_tol+1):(t_E-1)],
                            sigma_2s[(t_E-t_E_tol-2):(t_E-1-3)]))
 
-        # lambda_log_slope<-abs(log(lambdam)[t_E-1]-log(lambdam)[t_E-t_E_tol-1])/t_E_tol
-        # lambda_log_slope_base<-abs(log(lambdam)[t_E_tol+2]-log(lambdam)[2])/(t_E_tol)
+         #lambda_log_slope<-abs(log(lambdam)[t_E-1]-log(lambdam)[t_E-t_E_tol-1])/t_E_tol
+         #lambda_log_slope_base<-abs(log(lambdam)[t_E_tol+2]-log(lambdam)[2])/(t_E_tol)
 
 
         lambda_log_slope<-abs((lambdam)[t_E-1]-(lambdam)[t_E-t_E_tol-1])/t_E_tol
-        lambda_log_slope_base<-abs((lambdam)[t_E_tol+2]-(lambdam)[2])/(t_E_tol)
+        lambda_log_slope_base<-abs((lambdam)[t_E_tol+1]-(lambdam)[1])/(t_E_tol)
 
         sigma_slope<-abs((sigma_2s)[t_E-1]-(sigma_2s)[t_E-t_E_tol-1])/t_E_tol
 
@@ -303,7 +306,7 @@ AMCEM <-
         sigma_thresh<-sigma_2s[t_E-1]*sigma_tol_sd
       }
       print(paste0("lambda_slope: ",lambda_log_slope," , ",lambda_log_slope_base))
-      if(lambda_cor<cor_lambda | lambda_log_slope<rel_tol_loglombdaSlope | lambda_log_slope/lambda_log_slope_base<0.1){
+      if(lambda_cor<cor_lambda | lambda_log_slope<rel_tol_loglombdaSlope | lambda_log_slope/lambda_log_slope_base<0.01){
         if(!lambda_fixed)
         {
           time_lambda<-Sys.time()
@@ -314,8 +317,8 @@ AMCEM <-
         lambda_fixed<-FALSE
       }
 
-      # if(sigma_cor<cor_sigma & sigma_slope<0.01)
-      if(sigma_slope<0.01)
+      if(sigma_cor<cor_sigma & sigma_slope<0.001)
+      #if(sigma_slope<0.01)
       {
         if(!sigma_fixed){
           time_sigma<-Sys.time()
@@ -496,11 +499,11 @@ AMCEM <-
         Xs<-XX[Ns,]
 
         for(r in 1:length(Rejrates)){
-          cvals[r]<- (N-q)/2*log(max(1e-24,det(sigma_theta_cv[[r]])))+sum(M[Ns])/2*log(sigma_2_cv[r])
+          #cvals[r]<- (N-q)/2*log(max(1e-24,det(sigma_theta_cv[[r]])))+sum(M[Ns])/2*log(sigma_2_cv[r])
           #cvals[r]<- cvals[r]+1/2*log(det(kronecker(t(Xs)%*%Xs,solve(sigma_theta_cv[[r]]))))
-          cvals[r]<- cvals[r]+1/2*EE_cv[r]
+          #cvals[r]<- cvals[r]+1/2*EE_cv[r]
 
-          cvals[r]<- sigma_2_cv[r]
+        cvals[r]<- sigma_2_cv[r]
         }
 
 
@@ -690,10 +693,17 @@ AMCEM <-
 
         resids[[i]]<-colMeans(zplist[[i]]-zflist[[i]]%*%E[[i]])
 
-        epsilon<-epsilon+sum(diag((zplist[[i]]-zflist[[i]]%*%E[[i]])%*%kttt%*%
-                                    t(zplist[[i]]-zflist[[i]]%*%E[[i]])))/T_G
+          if(standardized)
+            kttt<-diag(nrow = M[i])
 
+        # if(standardized)
+        #   epsilon<-epsilon+sum((zplist[[i]]-zflist[[i]]%*%E[[i]])^2)/T_G
+        # else
+          epsilon<-epsilon+sum(diag((zplist[[i]]-zflist[[i]]%*%E[[i]])%*%kttt%*%
+                                      t(zplist[[i]]-zflist[[i]]%*%E[[i]])))/T_G
 
+        # epsilon<-epsilon+sum(diag((zplist[[i]]-zflist[[i]]%*%E[[i]])%*%kttt%*%
+        #                             t(zplist[[i]]-zflist[[i]]%*%E[[i]])))/T_G
       }
       sigma_2<-epsilon/sum(M)
 
@@ -712,19 +722,19 @@ AMCEM <-
 
       if(estimate_b){
         B<-matrix(b0,nrow = q,byrow = TRUE)
-        cc<-sqrt(t(B[1,])%*%inee%*%t(t(B[1,])))
-
-        if(cc<0.2)
-          cc<-1
-
-        if(!normalize_beta)
-          cc<-1
-
-        B<-B/cc
-        sigma0<-sigma0/(cc^2)
+        # cc<-sqrt(t(B[1,])%*%inee%*%t(t(B[1,])))
+        #
+        # if(cc<0.2)
+        #   cc<-1
+        #
+        # if(!normalize_beta)
+        #   cc<-1
+        #
+        # B<-B/cc
+        # sigma0<-sigma0/(cc^2)
         # B<-B%*%E2%*%diag(diag(Sigma_t)^-0.5)%*%t(E2)%*%solve(E2%*%t(E2))
         B2<-B%*%E2%*%diag(diag(Sigma_t)^-0.5)%*%t(E2)%*%solve(E2%*%t(E2))
-        b2<-c(B2)
+        b2<-t(t(c(t(B2))))
       }
 
 
@@ -738,7 +748,10 @@ AMCEM <-
       regs_std<-B2%*%E2
       b0<-t(t(c(t(B))))
 
-
+      if(standardized){
+        b0<-b2
+        sigma0<-sigma02
+      }
 
       ############
       ### EigenFunctions
@@ -783,7 +796,7 @@ AMCEM <-
             plot.new()
 
           plot(1:t_E,sigma_2s[1:t_E],'l',col=col2)
-          plot(1:t_E,(lambdam[1:t_E]),'l',col=col1)
+          plot(1:t_E,lambdam[1:t_E],'l',col=col1)
 
 
 
@@ -840,7 +853,7 @@ AMCEM <-
       sigma_pre<-eval1
 
 
-      if(all(sigma_fixed,lambda_fixed)){
+      if(all(sigma_fixed,lambda_fixed) & t_E>min_T_E){
         AMCEM_converged<-TRUE
         break
       }
@@ -886,7 +899,8 @@ AMCEM <-
     Et<-t(eval.basis(times_to_evaluate,basis))
 
     Beta<-B%*%Et
-    Beta_std<-B2%*%Et
+    ktt2<-diag(t(Et)%*%sigma0%*%Et)^-0.5
+    Beta_std<-(B%*%Et)*(matrix(1,nrow=q,ncol=1)%*%t(ktt2))
 
     if(!estimate_b)
       B<-B2<-Beta<-Beta_std<-NULL

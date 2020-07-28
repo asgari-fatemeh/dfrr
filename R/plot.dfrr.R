@@ -26,7 +26,7 @@
 #' \dontshow{plot(dfrr_fit,plot.kernel=FALSE)}
 #'
 #'@method plot dfrr
-#'
+#'@importFrom graphics plot.new
 #'@export
 
 plot.dfrr <-
@@ -54,7 +54,7 @@ for (i in 1:nographs) {
   plot.coef.dfrr(coefs,select=ind1:ind2,ask.hit.return=FALSE,...)
   if(ind2<(ppg*i))
     for(ii in (ind2+1):(ppg*i))
-      plot.new
+      plot.new()
   invisible(readline(prompt="Hit <Returen> to see next plot:"))
 
 }
@@ -84,7 +84,7 @@ for (i in 1:nographs) {
   plot.fpca.dfrr(pcs,select=ind1:ind2,ask.hit.return=FALSE)
   if(ind2<(ppg*i))
     for(ii in (ind2+1):(ppg*i))
-      plot.new
+      plot.new()
   invisible(readline(prompt="Hit <Returen> to see next plot:"))
 
 }
@@ -104,6 +104,7 @@ if(plot.kernel){
 
   #Plotting residual functions
 resids<-residuals.dfrr(dfrr_fit)
+par(mfrow=c(1,1))
 plot.residuals.dfrr(resids)
 
 }
