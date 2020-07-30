@@ -194,20 +194,31 @@ function(formula, yind=NULL, data = NULL, ydata = NULL,
           stop(paste0("Variable '",wsp_var_names[i1],"' has a length different from number of samples in the response (N=",N,")"))
         data[,wsp_var_names[i1]]<-tmp_
       }
-
-      if(!is.null(ydata)){
-        ids<-intersect(1:N,unique(ydata$.obs))
-        if(length(ids)!=N)
-          stop(paste0("The ids in '.obs' column in ydata must be the sequence 1,...,N; N=",N, " is thenmber of samples"))
-      }
-
     }
   }
 
-  # if(!is.null(ydata)){
-  #   ids<-unique(ydata$.obs)
-  #   data<-data[ids,]
-  # }else
+  if(!is.null(ydata)){
+    ids<-intersect(1:N,unique(ydata$.obs))
+    if(length(ids)!=N)
+      stop(paste0("The ids in '.obs' column in ydata must be the sequence 1,...,N; N=",N, " is the nmber of samples"))
+  }
+
+  if(!is.null(ydata)){
+    ids<-sort(unique(ydata$.obs),decreasing = FALSE)
+    if(is.null(rownames(data)))
+      stop("'rownmaes(data)' must agree with the '.obs' column of ydata")
+    rnm<-rownames(data)
+    data2<-as.data.frame(matrix(data[1,],nrow=length(ids)))
+    colnames(data2)<-colnames(data)
+    for(ii in 1:length(ids)){
+      inds<-which(rnm==ids[ii])
+      if(length(inds)==0)
+        data2[ii,]<-NA
+      else
+        data2[ii,]<-data[inds,]
+    }
+    data<-data2
+  }else
   if(is.null(ydata)){
     if(is.null(rownames(y_matrix))){
       ids<-1:N

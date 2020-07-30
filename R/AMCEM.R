@@ -501,9 +501,11 @@ AMCEM <-
         for(r in 1:length(Rejrates)){
           #cvals[r]<- (N-q)/2*log(max(1e-24,det(sigma_theta_cv[[r]])))+sum(M[Ns])/2*log(sigma_2_cv[r])
           #cvals[r]<- cvals[r]+1/2*log(det(kronecker(t(Xs)%*%Xs,solve(sigma_theta_cv[[r]]))))
-          #cvals[r]<- cvals[r]+1/2*EE_cv[r]
+         # cvals[r]<- cvals[r]+1/2*EE_cv[r]
 
-        cvals[r]<- sigma_2_cv[r]
+       cvals[r]<- sigma_2_cv[r]
+
+
         }
 
 
