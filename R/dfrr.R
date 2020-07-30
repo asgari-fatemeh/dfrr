@@ -195,13 +195,14 @@ function(formula, yind=NULL, data = NULL, ydata = NULL,
         data[,wsp_var_names[i1]]<-tmp_
       }
     }
-  }
-
-  if(!is.null(ydata)){
+    if(!is.null(ydata)){
     ids<-intersect(1:N,unique(ydata$.obs))
     if(length(ids)!=N)
       stop(paste0("The ids in '.obs' column in ydata must be the sequence 1,...,N; N=",N, " is the nmber of samples"))
   }
+  }
+
+  
 
   if(!is.null(ydata)){
     ids<-sort(unique(ydata$.obs),decreasing = FALSE)
