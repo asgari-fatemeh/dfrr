@@ -194,12 +194,13 @@ function(formula, yind=NULL, data = NULL, ydata = NULL,
           stop(paste0("Variable '",wsp_var_names[i1],"' has a length different from number of samples in the response (N=",N,")"))
         data[,wsp_var_names[i1]]<-tmp_
       }
-    }
-    if(!is.null(ydata)){
+          if(!is.null(ydata)){
     ids<-intersect(1:N,unique(ydata$.obs))
     if(length(ids)!=N)
       stop(paste0("The ids in '.obs' column in ydata must be the sequence 1,...,N; N=",N, " is the nmber of samples"))
   }
+    }
+
   }
 
   
