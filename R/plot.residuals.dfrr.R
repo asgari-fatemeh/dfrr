@@ -29,7 +29,7 @@ plot.residuals.dfrr<-function(x,...){
 
   dfrr_fit<-attr(residuals.dfrr,"dfrr_fit")
   standardized<-attr(residuals.dfrr,"standardized")
-  print(standardized)
+
   if(!standardized)
     residuals.dfrr<-residuals.dfrr(dfrr_fit,standardized=TRUE)
 
@@ -46,7 +46,7 @@ plot.residuals.dfrr<-function(x,...){
     names(resids)<-paste0(idss,",",timess)
     resids<-resids[!is.na(resids)]
   }
-print(4)
+
   if(requireNamespace("car",quietly = TRUE))
     car::qqPlot(resids,...)
   else

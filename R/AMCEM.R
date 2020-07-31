@@ -75,7 +75,7 @@ AMCEM <-
     cor_lambda<-0.5
 
 
-    t_E_tol<-20
+    t_E_tol<-10
     tol_b<-reltol*1.5
     tol_sigma0<-reltol
 

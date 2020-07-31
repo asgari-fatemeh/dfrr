@@ -139,7 +139,7 @@ function(x,plot.eigen.functions=TRUE,select=NULL,plot.contour=FALSE,plot.3dsurfa
     if(ask.hit.return)
       invisible(readline(prompt="Hit <Returen> to see next plot:"))
 
-      lbl<-plotnames[select[i]]
+      lbl<-plotnames[i]
       if(standardized)
         lbl<-paste0("Standardized ",lbl)
 
@@ -149,8 +149,10 @@ function(x,plot.eigen.functions=TRUE,select=NULL,plot.contour=FALSE,plot.3dsurfa
           return()
 
         lbl<-paste0(lbl," (",round(nus[select[i]]*100,digits = 2),"%)")
+        time<-time100
+        value<-yval[select[i],]
 
-      plot(time100,yval[select[i],],'l',main=lbl,...)
+      plot(time,value,'l',main=lbl,...)
     }
   }
 

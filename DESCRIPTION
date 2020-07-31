@@ -11,7 +11,7 @@ Description: Implementing Function-on-Scalar Regression model in which the respo
 License: GPL-3
 LazyData: TRUE
 Encoding: UTF-8
-Depends: tmvtnorm, fda
+Depends: R (>= 3.5.0), tmvtnorm (>= 1.4-10), fda (>= 5.1.4)
 Imports: MASS, ggplot2, plotly
 Suggests: car
 URL: https://github.com/asgari-fatemeh/dfrr

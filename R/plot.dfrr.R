@@ -93,18 +93,18 @@ dots<-list(...)
 if(plot.kernel){
   #plotting contour of kernel function
   plot.fpca.dfrr(pcs,plot.contour=TRUE,plot.eigen.functions=FALSE)
-  invisible(readline(prompt="Hit <Returen> to see next plot:"))
+  invisible(readline(prompt="Hit <Returen> to see contour plot of the kernel function:"))
 
 
   #Plotting 3d surface of kernel function
   plot.fpca.dfrr(pcs,plot.3dsurface=TRUE,plot.eigen.functions=FALSE)
-  invisible(readline(prompt="Hit <Returen> to see next plot:"))
+  invisible(readline(prompt="Hit <Returen> to see 3d surface plot of the kernel function:"))
 }
 
 
   #Plotting residual functions
-resids<-residuals.dfrr(dfrr_fit)
-par(mfrow=c(1,1))
-plot.residuals.dfrr(resids)
+  resids<-residuals.dfrr(dfrr_fit)
+  par(mfrow=c(1,1))
+  plot.residuals.dfrr(resids)
 
 }

@@ -88,11 +88,10 @@ plot.predict.dfrr <-
 
     if(length(main)!=length(id))
       main<-rep(main[1],length(id))
-    
 
     for(i in 1:length(id)){
-      lbl<-paste0("Prediction (Id: ",id[i],")")
       ind<-which(ids==id[i])
+      lbl<-paste0("Prediction (Id: ",id[i],")")
 
       pred<-t(E2)%*%t(t(coefs[i,]))
 

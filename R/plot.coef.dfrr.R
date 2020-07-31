@@ -68,10 +68,12 @@ plot.coef.dfrr<-function(x,select=NULL,ask.hit.return=TRUE,...){
       if(variance_explained<=0)
         return()
     }
-    if(ask.hit.return)
+    if(ask.hit.return){
       invisible(readline(prompt="Hit <Returen> to see next plot:"))
+    }
 
-    lbl<-plotnames[select[i]]
+
+    lbl<-plotnames[i]
     if(standardized)
       lbl<-paste0("Standardized ",lbl)
 
