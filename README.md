@@ -37,7 +37,7 @@ Y<-simulate.simple.dfrr(beta0=function(t){cos(pi*t+pi)},
                         beta1=function(t){2*t},
                         X=X,time=time)
 dfrr_fit<-dfrr(Y~X,yind=time)
-summary(dfrr_fit)
+plot(dfrr_fit)
 
 ##### Fitting dfrr model to the Madras Longitudinal Schizophrenia data
 data(madras)
@@ -53,7 +53,7 @@ for(i in 1:N){
 }
 rownames(xdata)<-ids
 
-madras_dfrr<-dfrr(Y~Age+Gender+Age*Gender, data=xdata, ydata=ydata, J=11,T_E=5)
+madras_dfrr<-dfrr(Y~Age+Gender+Age*Gender, data=xdata, ydata=ydata, J=11)
 coefs<-coef(madras_dfrr)
 plot(coefs)
 
