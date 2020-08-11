@@ -135,7 +135,7 @@ AMCEM <-
     if(estimate_b)
       b0<-t(t(rep(0,J*q)))
     else{
-      b0<-t(t(matrix(0,2,J)))
+      b0<-t(t(c(matrix(0,2,J))))
       B<-B2<-matrix(0,2,J)
     }
 
@@ -261,7 +261,8 @@ AMCEM <-
       zusum<-matrix(0,J,J)
       epsilon<-0
 
-      B<-matrix(b0,nrow = q,byrow = TRUE)
+      if(estimate_b)
+        B<-matrix(b0,nrow = q,byrow = TRUE)
 
       start.value<-NULL
       burn.in.samples<-100
@@ -473,35 +474,34 @@ AMCEM <-
           }
           sigma_2_cv[r]<-epsilon/sum(M[Ns])
 
+          # Xs<-XX[Ns,]
 
-          Xs<-XX[Ns,]
-
-          Zs_cv<-list()
-          EE1<-0
-          Ezt<-matrix(0,J,length(Ns))
-          innerMatrix<-kronecker(Xs%*%solve(t(Xs)%*%Xs)%*%t(Xs),sigma_theta_cv[[r]])
-
-          for(j in 1:T_G_cv){
-            Zs_cv[[j]]<-t(sapply(Ns, function(ii){zflist2[[ii]][j,]}))
-            EE1<-EE1+t(c(t(Zs_cv[[j]])))%*%innerMatrix%*%t(t(c(t(Zs_cv[[j]]))))
-            Ezt<-Ezt+t(Zs_cv[[j]])
-
-          }
-          EE1<-EE1/T_G_cv
-          EE2<-t(c(Ezt))%*%innerMatrix%*%t(t(c(Ezt)))
-
-          EE_cv[r]<-EE1-EE2
+          # Zs_cv<-list()
+          # EE1<-0
+          # Ezt<-matrix(0,J,length(Ns))
+          # innerMatrix<-kronecker(Xs%*%solve(t(Xs)%*%Xs)%*%t(Xs),sigma_theta_cv[[r]])
+          #
+          # for(j in 1:T_G_cv){
+          #   Zs_cv[[j]]<-t(sapply(Ns, function(ii){zflist2[[ii]][j,]}))
+          #   EE1<-EE1+t(c(t(Zs_cv[[j]])))%*%innerMatrix%*%t(t(c(t(Zs_cv[[j]]))))
+          #   Ezt<-Ezt+t(Zs_cv[[j]])
+          #
+          # }
+          # EE1<-EE1/T_G_cv
+          # EE2<-t(c(Ezt))%*%innerMatrix%*%t(t(c(Ezt)))
+          #
+          # EE_cv[r]<-EE1-EE2
 
         }
 
         cvals<-c()
 
-        Xs<-XX[Ns,]
+        #Xs<-XX[Ns,]
 
         for(r in 1:length(Rejrates)){
-          #cvals[r]<- (N-q)/2*log(max(1e-24,det(sigma_theta_cv[[r]])))+sum(M[Ns])/2*log(sigma_2_cv[r])
-          #cvals[r]<- cvals[r]+1/2*log(det(kronecker(t(Xs)%*%Xs,solve(sigma_theta_cv[[r]]))))
-         # cvals[r]<- cvals[r]+1/2*EE_cv[r]
+          ##cvals[r]<- (N-q)/2*log(max(1e-24,det(sigma_theta_cv[[r]])))+sum(M[Ns])/2*log(sigma_2_cv[r])
+          ##cvals[r]<- cvals[r]+1/2*log(det(kronecker(t(Xs)%*%Xs,solve(sigma_theta_cv[[r]]))))
+          ##cvals[r]<- cvals[r]+1/2*EE_cv[r]
 
        cvals[r]<- sigma_2_cv[r]
 
@@ -748,10 +748,12 @@ AMCEM <-
 
       regs<-B%*%E2
       regs_std<-B2%*%E2
-      b0<-t(t(c(t(B))))
+      if(estimate_b)
+        b0<-t(t(c(t(B))))
 
       if(standardized){
-        b0<-b2
+        if(estimate_b)
+          b0<-b2
         sigma0<-sigma02
       }
 
@@ -789,10 +791,12 @@ AMCEM <-
             col2<-'red'
           if(b_fixed)
             col3<-'red'
+          if(estimate_b)
+            plot(time2,regs[1,],'l',col=col3,main = "Unstandardized Reg 1")
+          else
+            plot.new()
 
-          plot(time2,regs[1,],'l',col=col3,main = "Unstandardized Reg 1")
-
-          if(q>1)
+          if(estimate_b & q>1)
             plot(time2,regs[2,],'l',col=col3,main = "Unstandardized Reg 2")
           else
             plot.new()
@@ -808,8 +812,9 @@ AMCEM <-
           if(b_fixed)
             col1<-'red'
 
-          plot(time2,regs_std[1,],'l',col=col1,main = "Standardized Reg 1")
-          if(q>1)
+          if(estimate_b)
+            plot(time2,regs_std[1,],'l',col=col1,main = "Standardized Reg 1")
+          if(estimate_b & q>1)
             plot(time2,regs_std[2,],'l',col=col1,main = "Standardized Reg 2")
           else
             plot.new()
@@ -827,11 +832,17 @@ AMCEM <-
         deltak<-time2[2]-time2[1]
         beta_new<-B2%*%E2
         beta_old<-b_pre%*%E2
-        dif_b0<-mean(sqrt(deltak*rowSums((beta_new-beta_old)^2))) #Remanian Integral
+        if(estimate_b)
+          dif_b0<-mean(sqrt(deltak*rowSums((beta_new-beta_old)^2))) #Remanian Integral
+        else
+          dif_b0<-0
 
         dif_sigma<-sqrt(sum((eval1-sigma_pre)^2)) #Hilbert Schmidth norm
 
-        b_thr<-tol_b*sqrt(mean(b2^2))
+        b_thr<-if(estimate_b)
+                tol_b*sqrt(mean(b2^2))
+               else
+                0
         s_thr<-tol_sigma0*sqrt(sum(eval1^2) )
 
         if(!b_fixed & dif_b0<b_thr){
@@ -900,12 +911,18 @@ AMCEM <-
 
     Et<-t(eval.basis(times_to_evaluate,basis))
 
-    Beta<-B%*%Et
     ktt2<-diag(t(Et)%*%sigma0%*%Et)^-0.5
-    Beta_std<-(B%*%Et)*(matrix(1,nrow=q,ncol=1)%*%t(ktt2))
+
+    if(estimate_b){
+      Beta<-B%*%Et
+      Beta_std<-(B%*%Et)*(matrix(1,nrow=q,ncol=1)%*%t(ktt2))
+    }else{
+      Beta<-Beta_std<-matrix(NA,0,0)
+    }
+
 
     if(!estimate_b)
-      B<-B2<-Beta<-Beta_std<-NULL
+      B<-B2<-Beta<-Beta_std<-matrix(NA,0,0)
 
     fitted_coefs<-zsum
     if(!is.null(ids))

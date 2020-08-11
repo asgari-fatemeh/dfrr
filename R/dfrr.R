@@ -259,7 +259,7 @@ function(formula, yind=NULL, data = NULL, ydata = NULL,
   if(!is.null(ydata)){
 
     for(i in 1:N){
-      if(!is.null(xData) & all(!is.na(xData[i,]))){
+      if(is.null(xData) | (!is.null(xData) & all(!is.na(xData[i,])))){
         ys<-ydata[ydata$.obs==ids[i],]
         ys<-ys[!is.na(ys$.value) & !is.na(ys$.index),]
         if(length(ys)==0)
@@ -275,7 +275,7 @@ function(formula, yind=NULL, data = NULL, ydata = NULL,
   }else{
 
     for(i in 1:N){
-      if(!is.null(xData) & all(!is.na(xData[i,]))){
+      if(is.null(xData) | (!is.null(xData) & all(!is.na(xData[i,])))){
         ys<-y_matrix[i,]
         ty<-yind[!is.na(ys)]
         if(length(ty)==0)
@@ -292,7 +292,7 @@ function(formula, yind=NULL, data = NULL, ydata = NULL,
 
 
   if(kk==0)
-    stop("There is no sample with complete with data")
+    stop("There is no sample with complete data")
 
   if(length(i_nna)!=N)
     if(!is.null(xData))
