@@ -307,6 +307,13 @@ function(formula, yind=NULL, data = NULL, ydata = NULL,
     rangeval<-c(min(timeT),max(timeT))
   }
 
+
+  if(!is.null(times_to_evaluate))
+    if(min(times_to_evaluate)<rangeval[1] | max(times_to_evaluate)>rangeval[2])
+      stop(paste0("The argument 'times_to_evaluate' does not match with the minumum and maximum of times in which the samples are observed.\r\n",
+                  "Please rectify the 'times_to_evalute' argument or 'rangeval' argument.\r\n",
+                  "The 'times_to_evaluate' argument must be included in the interval specified by the 'rangeval' argument."))
+
   if(length(rangeval)!=2)
     stop("rangeval must be a vector of length 2")
 
